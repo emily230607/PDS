@@ -5,6 +5,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+
 import net.miginfocom.swing.MigLayout;
 import java.awt.Color;
 import javax.swing.JTextField;
@@ -14,6 +19,9 @@ import java.awt.Font;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
+
+import javax.swing.text.MaskFormatter;
+import javax.swing.JFormattedTextField;
 
 public class TelaInicial extends JFrame {
 
@@ -31,6 +39,7 @@ public class TelaInicial extends JFrame {
 				try {
 					TelaInicial frame = new TelaInicial();
 					frame.setVisible(true);
+					System.out.println("dsfsdf");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -62,21 +71,50 @@ public class TelaInicial extends JFrame {
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(lblNewLabel_1);
 		
+		class ApenasLetrasFilter extends DocumentFilter {
+		    @Override
+		    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) 
+		            throws BadLocationException {
+		        if (string.matches("[a-zA-ZÀ-ÿ\\s]+")) { // aceita letras e espaço
+		            super.insertString(fb, offset, string, attr);
+		        }
+		    }
+
+		    @Override
+		    public void replace(FilterBypass fb, int offset, int length, String string, AttributeSet attrs) 
+		            throws BadLocationException {
+		        if (string.matches("[a-zA-ZÀ-ÿ\\s]+")) {
+		            super.replace(fb, offset, length, string, attrs);
+		        }
+		    }
+		}
+		
 		textField = new JTextField();
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textField.setBounds(56, 58, 240, 23);
 		contentPane.add(textField);
 		textField.setColumns(10);
+		((AbstractDocument) textField.getDocument()).setDocumentFilter(new ApenasLetrasFilter());
+		
+		
+		
 		
 		JLabel lblNewLabel_1_1 = new JLabel("CPF");
 		lblNewLabel_1_1.setBounds(12, 102, 25, 19);
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(lblNewLabel_1_1);
 		
-		textField_1 = new JTextField();
+		MaskFormatter cpfMask = null;
+		try {
+		    cpfMask = new MaskFormatter("###########"); // 11 números
+		    cpfMask.setPlaceholderCharacter('_'); // mostra "_" nos espaços vazios
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+
+		JFormattedTextField textField_1 = new JFormattedTextField(cpfMask);
 		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textField_1.setBounds(55, 102, 112, 23);
-		textField_1.setColumns(10);
+		textField_1.setBounds(55, 102, 98, 23);
 		contentPane.add(textField_1);
 		
 		JButton btnNewButton = new JButton("Entrar");
