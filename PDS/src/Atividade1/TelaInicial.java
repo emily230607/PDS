@@ -11,10 +11,14 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
 import net.miginfocom.swing.MigLayout;
+
+
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
@@ -47,6 +51,10 @@ public class TelaInicial extends JFrame {
 		});
 	}
 
+	private void abrirTelaCadastroProdutos() {
+	    dispose(); // Fecha a tela atual
+	    new TelaCadastroProdutos().setVisible(true); // Abre a tela de cadastro
+	}
 	/**
 	 * Create the frame.
 	 */
@@ -90,8 +98,8 @@ public class TelaInicial extends JFrame {
 		}
 		
 		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textField.setBounds(56, 58, 240, 23);
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		contentPane.add(textField);
 		textField.setColumns(10);
 		((AbstractDocument) textField.getDocument()).setDocumentFilter(new ApenasLetrasFilter());
@@ -113,23 +121,49 @@ public class TelaInicial extends JFrame {
 		}
 
 		JFormattedTextField textField_1 = new JFormattedTextField(cpfMask);
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textField_1.setBounds(55, 102, 98, 23);
+		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		contentPane.add(textField_1);
 		
+		JCheckBox chckbxNewCheckBox = new JCheckBox("Sou Administrador");
+		chckbxNewCheckBox.setBounds(50, 146, 146, 30);
+		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		contentPane.add(chckbxNewCheckBox);
+		
 		JButton btnNewButton = new JButton("Entrar");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnNewButton.setBounds(272, 197, 89, 30);
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		contentPane.add(btnNewButton);
 		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnCancelar.setBounds(78, 197, 89, 30);
-		contentPane.add(btnCancelar);
+		btnNewButton.addActionListener(e -> {
+		    String nome = textField.getText();
+		    String cpf = textField_1.getText();
+		    boolean isAdmin = chckbxNewCheckBox.isSelected();
+
+		    if (nome.isEmpty() || cpf.contains("_")) {
+		        JOptionPane.showMessageDialog(this, "Preencha todos os campos corretamente!");
+		        return;
+		    }
+
+		    dispose(); // fecha a tela atual
+
+		    if (isAdmin) {
+		        new TelaCadastroProdutos().setVisible(true);
+		    } else {
+		        new TelaCompra().setVisible(true);
+		    }
+		});
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Sou Administrador");
-		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		chckbxNewCheckBox.setBounds(50, 146, 146, 30);
-		contentPane.add(chckbxNewCheckBox);
+		
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(78, 197, 89, 30);
+		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		contentPane.add(btnCancelar);
+
+		btnCancelar.addActionListener(e -> {
+		    System.exit(0); // fecha o sistema
+		});
+
 	}
 }
