@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
+import java.awt.Color;
 
 public class TelaCompra extends JFrame {
 
@@ -35,11 +36,13 @@ public class TelaCompra extends JFrame {
 	 */
 	public TelaCompra() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 515, 378);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(208, 192, 209));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
 	}
 
 }
