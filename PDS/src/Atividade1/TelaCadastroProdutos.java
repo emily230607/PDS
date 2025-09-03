@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.DocumentFilter;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -22,8 +25,8 @@ public class TelaCadastroProdutos extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
-	private JTextField textField_2;
 	private JTextField textField_3;
+	private JTextField textField_2;
 
 	/**
 	 * Launch the application.
@@ -66,15 +69,15 @@ public class TelaCadastroProdutos extends JFrame {
 		contentPane.add(lblRemoverProduto);
 		
 		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		textField.setBounds(76, 56, 303, 20);
+		textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		textField.setBounds(76, 56, 303, 25);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textField_1.setColumns(10);
-		textField_1.setBounds(76, 99, 73, 20);
+		textField_1.setBounds(76, 99, 73, 25);
 		contentPane.add(textField_1);
 		
 		JLabel lblNome = new JLabel("Nome");
@@ -82,10 +85,18 @@ public class TelaCadastroProdutos extends JFrame {
 		lblNome.setBounds(10, 52, 56, 25);
 		contentPane.add(lblNome);
 		
-		JLabel lblPreo = new JLabel("Preço");
-		lblPreo.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblPreo.setBounds(10, 95, 42, 25);
-		contentPane.add(lblPreo);
+		// Campo Preço (cadastro novo produto)
+		textField_1 = new JTextField();
+		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		textField_1.setBounds(76, 99, 120, 25);
+		contentPane.add(textField_1);
+		((AbstractDocument) textField_1.getDocument()).setDocumentFilter(new DocumentFilter());
+
+		// Adiciona prefixo R$ na frente
+		JLabel lblMoeda = new JLabel("R$");
+		lblMoeda.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblMoeda.setBounds(55, 95, 20, 25);
+		contentPane.add(lblMoeda);
 		
 		JButton btnNewButton = new JButton("Cadastrar");
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -112,22 +123,17 @@ public class TelaCadastroProdutos extends JFrame {
 		lblNome_2.setBounds(10, 309, 73, 25);
 		contentPane.add(lblNome_2);
 		
-		JLabel lblPreo_1 = new JLabel("Novo preço");
-		lblPreo_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblPreo_1.setBounds(10, 345, 73, 25);
-		contentPane.add(lblPreo_1);
-		
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		textField_2.setColumns(10);
-		textField_2.setBounds(89, 313, 290, 20);
-		contentPane.add(textField_2);
-		
+		// Campo Novo Preço (edição)
 		textField_3 = new JTextField();
-		textField_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		textField_3.setColumns(10);
-		textField_3.setBounds(93, 349, 73, 20);
+		textField_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		textField_3.setBounds(88, 348, 120, 25);
 		contentPane.add(textField_3);
+		((AbstractDocument) textField_3.getDocument()).setDocumentFilter(new DocumentFilter());
+
+		JLabel lblMoeda2 = new JLabel("R$");
+		lblMoeda2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblMoeda2.setBounds(65, 345, 20, 25);
+		contentPane.add(lblMoeda2);
 		
 		JButton btnNewButton_2 = new JButton("Editar");
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -150,8 +156,8 @@ public class TelaCadastroProdutos extends JFrame {
 		contentPane.add(lblNome_1_1);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		comboBox_1.setBounds(123, 270, 256, 20);
+		comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		comboBox_1.setBounds(123, 270, 256, 25);
 		contentPane.add(comboBox_1);
 		
 		JButton btnNewButton_3_1 = new JButton("Cancelar");
@@ -161,8 +167,20 @@ public class TelaCadastroProdutos extends JFrame {
 		contentPane.add(btnNewButton_3_1);
 		
 		JComboBox comboBox_1_1 = new JComboBox();
-		comboBox_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		comboBox_1_1.setBounds(136, 170, 256, 20);
+		comboBox_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		comboBox_1_1.setBounds(136, 170, 256, 23);
 		contentPane.add(comboBox_1_1);
+		
+		textField_3 = new JTextField();
+		textField_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		textField_3.setColumns(10);
+		textField_3.setBounds(88, 348, 73, 25);
+		contentPane.add(textField_3);
+		
+		textField_2 = new JTextField();
+		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		textField_2.setColumns(10);
+		textField_2.setBounds(89, 312, 303, 25);
+		contentPane.add(textField_2);
 	}
 }
