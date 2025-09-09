@@ -31,7 +31,7 @@ public class TelaInicial extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField txtNome;
 	private JTextField textField_1;
 
 	/**
@@ -74,10 +74,10 @@ public class TelaInicial extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Nome");
-		lblNewLabel_1.setBounds(10, 59, 39, 19);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		contentPane.add(lblNewLabel_1);
+		JLabel lblNome = new JLabel("Nome");
+		lblNome.setBounds(10, 59, 39, 19);
+		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		contentPane.add(lblNome);
 		
 		class ApenasLetrasFilter extends DocumentFilter {
 		    @Override
@@ -97,20 +97,20 @@ public class TelaInicial extends JFrame {
 		    }
 		}
 		
-		textField = new JTextField();
-		textField.setBounds(56, 58, 240, 23);
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		contentPane.add(textField);
-		textField.setColumns(10);
-		((AbstractDocument) textField.getDocument()).setDocumentFilter(new ApenasLetrasFilter());
+		txtNome = new JTextField();
+		txtNome.setBounds(56, 58, 240, 23);
+		txtNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		contentPane.add(txtNome);
+		txtNome.setColumns(10);
+		((AbstractDocument) txtNome.getDocument()).setDocumentFilter(new ApenasLetrasFilter());
 		
 		
 		
 		
-		JLabel lblNewLabel_1_1 = new JLabel("CPF");
-		lblNewLabel_1_1.setBounds(12, 102, 25, 19);
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		contentPane.add(lblNewLabel_1_1);
+		JLabel lblCPF = new JLabel("CPF");
+		lblCPF.setBounds(12, 102, 25, 19);
+		lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		contentPane.add(lblCPF);
 		
 		MaskFormatter cpfMask = null;
 		try {
@@ -120,25 +120,25 @@ public class TelaInicial extends JFrame {
 		    e.printStackTrace();
 		}
 
-		JFormattedTextField textField_1 = new JFormattedTextField(cpfMask);
-		textField_1.setBounds(55, 102, 98, 23);
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		contentPane.add(textField_1);
+		JFormattedTextField txtCPF = new JFormattedTextField(cpfMask);
+		txtCPF.setBounds(55, 102, 98, 23);
+		txtCPF.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		contentPane.add(txtCPF);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Sou Administrador");
-		chckbxNewCheckBox.setBounds(50, 146, 146, 30);
-		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		contentPane.add(chckbxNewCheckBox);
+		JCheckBox chckbxADM = new JCheckBox("Sou Administrador");
+		chckbxADM.setBounds(50, 146, 146, 30);
+		chckbxADM.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		contentPane.add(chckbxADM);
 		
-		JButton btnNewButton = new JButton("Entrar");
-		btnNewButton.setBounds(272, 197, 89, 30);
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		contentPane.add(btnNewButton);
+		JButton btnEntrar = new JButton("Entrar");
+		btnEntrar.setBounds(272, 197, 89, 30);
+		btnEntrar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		contentPane.add(btnEntrar);
 		
-		btnNewButton.addActionListener(e -> {
-		    String nome = textField.getText();
-		    String cpf = textField_1.getText();
-		    boolean isAdmin = chckbxNewCheckBox.isSelected();
+		btnEntrar.addActionListener(e -> {
+		    String nome = txtNome.getText();
+		    String cpf = txtCPF.getText();
+		    boolean isAdmin = chckbxADM.isSelected();
 
 		    if (nome.isEmpty() || cpf.contains("_")) {
 		        JOptionPane.showMessageDialog(this, "Preencha todos os campos corretamente!");

@@ -3,23 +3,23 @@ package Atividade1;
 public class Produtos {
 	
 	
-		private int preco;
+		private float preco;
 	    private String nome;
 
 	    // Construtores
 	    public Produtos() {}
 
-	    public Produtos(int preco, String nome) {
+	    public Produtos(float preco, String nome) {
 	        this.preco = preco;
 	        this.nome = nome;
 	    }
 
 	    // Getters e Setters
-	    public int getpreco() {
+	    public float getpreco() {
 	        return preco;
 	    }
 
-	    public void setpreco(int preco) {
+	    public void setpreco(float preco) {
 	        this.preco = preco;
 	    }
 

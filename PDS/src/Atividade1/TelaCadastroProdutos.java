@@ -23,10 +23,11 @@ public class TelaCadastroProdutos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txtNome;
+	private JTextField txtPreco;
 	private JTextField textField_3;
-	private JTextField textField_2;
+	private JTextField tntNovoNome;
+	private JTextField txtNovoPreço;
 
 	/**
 	 * Launch the application.
@@ -68,17 +69,11 @@ public class TelaCadastroProdutos extends JFrame {
 		lblRemoverProduto.setBounds(167, 132, 136, 25);
 		contentPane.add(lblRemoverProduto);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textField.setBounds(76, 56, 303, 25);
-		contentPane.add(textField);
-		textField.setColumns(10);
-		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textField_1.setColumns(10);
-		textField_1.setBounds(73, 132, 73, 25);
-		contentPane.add(textField_1);
+		txtNome = new JTextField();
+		txtNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtNome.setBounds(76, 56, 316, 25);
+		contentPane.add(txtNome);
+		txtNome.setColumns(10);
 		
 		JLabel lblNome = new JLabel("Nome");
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -86,101 +81,93 @@ public class TelaCadastroProdutos extends JFrame {
 		contentPane.add(lblNome);
 		
 		// Campo Preço (cadastro novo produto)
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textField_1.setBounds(76, 99, 120, 25);
-		contentPane.add(textField_1);
-		((AbstractDocument) textField_1.getDocument()).setDocumentFilter(new DocumentFilter());
+		txtPreco = new JTextField();
+		txtPreco.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtPreco.setBounds(76, 99, 65, 25);
+		contentPane.add(txtPreco);
+		((AbstractDocument) txtPreco.getDocument()).setDocumentFilter(new DocumentFilter());
 
 		// Adiciona prefixo R$ na frente
-		JLabel lblMoeda = new JLabel("Preço");
-		lblMoeda.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblMoeda.setBounds(10, 97, 43, 25);
-		contentPane.add(lblMoeda);
+		JLabel lblPreco = new JLabel("Preço");
+		lblPreco.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblPreco.setBounds(10, 97, 43, 25);
+		contentPane.add(lblPreco);
 		
-		JButton btnNewButton = new JButton("Cadastrar");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnNewButton.setBounds(347, 98, 94, 23);
-		contentPane.add(btnNewButton);
+		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnCadastrar.setBounds(298, 98, 94, 23);
+		contentPane.add(btnCadastrar);
 		
-		JButton btnNewButton_1 = new JButton("Remover");
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnNewButton_1.setBounds(364, 204, 89, 23);
-		contentPane.add(btnNewButton_1);
+		JButton btnRemover = new JButton("Remover");
+		btnRemover.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnRemover.setBounds(303, 204, 89, 23);
+		contentPane.add(btnRemover);
 		
-		JLabel lblNome_1 = new JLabel("Selecionar Produto");
-		lblNome_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNome_1.setBounds(10, 168, 113, 25);
-		contentPane.add(lblNome_1);
+		JLabel lblSelecionarProduto = new JLabel("Selecionar Produto");
+		lblSelecionarProduto.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblSelecionarProduto.setBounds(10, 168, 113, 25);
+		contentPane.add(lblSelecionarProduto);
 		
 		JLabel lblEditarProduto = new JLabel("Editar Produto");
 		lblEditarProduto.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblEditarProduto.setBounds(189, 227, 114, 25);
 		contentPane.add(lblEditarProduto);
 		
-		JLabel lblNome_2 = new JLabel("Novo nome");
-		lblNome_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNome_2.setBounds(10, 309, 73, 25);
-		contentPane.add(lblNome_2);
-		
-		// Campo Novo Preço (edição)
-		textField_3 = new JTextField();
-		textField_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textField_3.setBounds(88, 348, 120, 25);
-		contentPane.add(textField_3);
-		((AbstractDocument) textField_3.getDocument()).setDocumentFilter(new DocumentFilter());
+		JLabel lblNovoNome = new JLabel("Novo nome");
+		lblNovoNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNovoNome.setBounds(10, 309, 73, 25);
+		contentPane.add(lblNovoNome);
 
-		JLabel lblMoeda2 = new JLabel("Novo preço");
-		lblMoeda2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblMoeda2.setBounds(10, 349, 65, 25);
-		contentPane.add(lblMoeda2);
+		JLabel lblNovoPreço = new JLabel("Novo preço");
+		lblNovoPreço.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNovoPreço.setBounds(10, 349, 65, 25);
+		contentPane.add(lblNovoPreço);
 		
-		JButton btnNewButton_2 = new JButton("Editar");
-		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnNewButton_2.addActionListener(new ActionListener() {
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_2.setBounds(290, 346, 89, 23);
-		contentPane.add(btnNewButton_2);
+		btnEditar.setBounds(303, 350, 89, 23);
+		contentPane.add(btnEditar);
 		
-		JButton btnNewButton_3 = new JButton("Finalizar");
-		btnNewButton_3.setBackground(new Color(173, 145, 174));
-		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_3.setBounds(347, 395, 100, 30);
-		contentPane.add(btnNewButton_3);
+		JButton btnFinalizar = new JButton("Finalizar");
+		btnFinalizar.setBackground(new Color(173, 145, 174));
+		btnFinalizar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnFinalizar.setBounds(347, 395, 100, 30);
+		contentPane.add(btnFinalizar);
 		
-		JLabel lblNome_1_1 = new JLabel("Selecionar Produto");
-		lblNome_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNome_1_1.setBounds(10, 267, 113, 25);
-		contentPane.add(lblNome_1_1);
+		JLabel lblSelecionarProdutoEdição = new JLabel("Selecionar Produto");
+		lblSelecionarProdutoEdição.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblSelecionarProdutoEdição.setBounds(10, 267, 113, 25);
+		contentPane.add(lblSelecionarProdutoEdição);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		comboBox_1.setBounds(123, 270, 256, 25);
-		contentPane.add(comboBox_1);
+		JComboBox comboBoxSelecionarProdutoEdição = new JComboBox();
+		comboBoxSelecionarProdutoEdição.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		comboBoxSelecionarProdutoEdição.setBounds(123, 270, 269, 25);
+		contentPane.add(comboBoxSelecionarProdutoEdição);
 		
-		JButton btnNewButton_3_1 = new JButton("Cancelar");
-		btnNewButton_3_1.setBackground(new Color(173, 145, 174));
-		btnNewButton_3_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton_3_1.setBounds(28, 395, 100, 30);
-		contentPane.add(btnNewButton_3_1);
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBackground(new Color(173, 145, 174));
+		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnCancelar.setBounds(28, 395, 100, 30);
+		contentPane.add(btnCancelar);
 		
-		JComboBox comboBox_1_1 = new JComboBox();
-		comboBox_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		comboBox_1_1.setBounds(136, 170, 256, 23);
-		contentPane.add(comboBox_1_1);
+		JComboBox comboBoxSelecionarProduto = new JComboBox();
+		comboBoxSelecionarProduto.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		comboBoxSelecionarProduto.setBounds(136, 170, 256, 23);
+		contentPane.add(comboBoxSelecionarProduto);
 		
-		textField_3 = new JTextField();
-		textField_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textField_3.setColumns(10);
-		textField_3.setBounds(88, 348, 73, 25);
-		contentPane.add(textField_3);
+		tntNovoNome = new JTextField();
+		tntNovoNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tntNovoNome.setColumns(10);
+		tntNovoNome.setBounds(89, 312, 303, 25);
+		contentPane.add(tntNovoNome);
 		
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textField_2.setColumns(10);
-		textField_2.setBounds(89, 312, 303, 25);
-		contentPane.add(textField_2);
+		txtNovoPreço = new JTextField();
+		txtNovoPreço.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtNovoPreço.setBounds(88, 348, 65, 25);
+		contentPane.add(txtNovoPreço);
 	}
 }
