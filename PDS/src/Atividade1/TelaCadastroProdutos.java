@@ -77,7 +77,7 @@ public class TelaCadastroProdutos extends JFrame {
 		textField_1 = new JTextField();
 		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textField_1.setColumns(10);
-		textField_1.setBounds(76, 99, 73, 25);
+		textField_1.setBounds(73, 132, 73, 25);
 		contentPane.add(textField_1);
 		
 		JLabel lblNome = new JLabel("Nome");
@@ -93,9 +93,9 @@ public class TelaCadastroProdutos extends JFrame {
 		((AbstractDocument) textField_1.getDocument()).setDocumentFilter(new DocumentFilter());
 
 		// Adiciona prefixo R$ na frente
-		JLabel lblMoeda = new JLabel("R$");
+		JLabel lblMoeda = new JLabel("Preço");
 		lblMoeda.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblMoeda.setBounds(55, 95, 20, 25);
+		lblMoeda.setBounds(10, 97, 43, 25);
 		contentPane.add(lblMoeda);
 		
 		JButton btnNewButton = new JButton("Cadastrar");
@@ -130,9 +130,9 @@ public class TelaCadastroProdutos extends JFrame {
 		contentPane.add(textField_3);
 		((AbstractDocument) textField_3.getDocument()).setDocumentFilter(new DocumentFilter());
 
-		JLabel lblMoeda2 = new JLabel("R$");
+		JLabel lblMoeda2 = new JLabel("Novo preço");
 		lblMoeda2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblMoeda2.setBounds(65, 345, 20, 25);
+		lblMoeda2.setBounds(10, 349, 65, 25);
 		contentPane.add(lblMoeda2);
 		
 		JButton btnNewButton_2 = new JButton("Editar");
