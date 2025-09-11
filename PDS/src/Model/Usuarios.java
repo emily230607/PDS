@@ -1,4 +1,4 @@
-package Atividade1;
+package Model;
 
 public class Usuarios {
 	

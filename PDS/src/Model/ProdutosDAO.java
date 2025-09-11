@@ -1,4 +1,4 @@
-package Atividade1;
+package Model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

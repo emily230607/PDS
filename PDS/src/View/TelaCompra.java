@@ -1,4 +1,4 @@
-package Atividade1;
+package View;
 
 import java.awt.EventQueue;
 import java.awt.Font;

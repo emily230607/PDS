@@ -1,4 +1,4 @@
-package Atividade1;
+package View;
 
 import java.awt.Color;
 import java.awt.EventQueue;

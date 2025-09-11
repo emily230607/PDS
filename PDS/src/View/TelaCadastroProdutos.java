@@ -1,4 +1,4 @@
-package Atividade1;
+package View;
 
 import java.util.ArrayList;
 import java.awt.EventQueue;

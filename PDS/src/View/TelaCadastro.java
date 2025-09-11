@@ -1,4 +1,4 @@
-package Atividade1;
+package View;
 
 import java.awt.EventQueue;
 
@@ -75,7 +75,7 @@ public class TelaCadastro extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNome = new JLabel("Nome");
-		lblNome.setBounds(10, 59, 39, 19);
+		lblNome.setBounds(52, 59, 39, 19);
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(lblNome);
 		
@@ -98,7 +98,7 @@ public class TelaCadastro extends JFrame {
 		}
 		
 		txtNome = new JTextField();
-		txtNome.setBounds(56, 58, 240, 23);
+		txtNome.setBounds(98, 58, 240, 23);
 		txtNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		contentPane.add(txtNome);
 		txtNome.setColumns(10);
@@ -108,7 +108,7 @@ public class TelaCadastro extends JFrame {
 		
 		
 		JLabel lblCPF = new JLabel("CPF");
-		lblCPF.setBounds(12, 102, 25, 19);
+		lblCPF.setBounds(54, 102, 25, 19);
 		lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(lblCPF);
 		
@@ -121,7 +121,7 @@ public class TelaCadastro extends JFrame {
 		}
 
 		JFormattedTextField txtCPF = new JFormattedTextField(cpfMask);
-		txtCPF.setBounds(55, 102, 98, 23);
+		txtCPF.setBounds(97, 102, 98, 23);
 		txtCPF.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		contentPane.add(txtCPF);
 		
