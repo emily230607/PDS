@@ -3,6 +3,7 @@ package View;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.sql.Connection;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -18,6 +19,11 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.MaskFormatter;
+
+import Model.BancoDeDados;
+import Model.Usuarios;
+import Model.UsuariosDAO;
+
 import javax.swing.text.DocumentFilter.FilterBypass;
 
 public class TelaLogin extends JFrame {
@@ -137,8 +143,28 @@ public class TelaLogin extends JFrame {
 		        return;
 		    }
 
-		    dispose(); // Fecha a tela atual
-		    new TelaCadastroProdutos().setVisible(true); // Vai para TelaCadastro
+		    try {
+		        Connection conn = BancoDeDados.conectar();
+		        UsuariosDAO dao = new UsuariosDAO();
+		        Usuarios usuario = dao.buscarPorCpf(cpf);
+
+		        if (usuario != null && usuario.getNome().equalsIgnoreCase(nome)) {
+		            JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
+
+		            dispose(); // fecha login
+		            if (usuario.getIsAdmin()) {
+		                new TelaCadastroProdutos().setVisible(true);
+		            } else {
+		                new TelaCompra().setVisible(true);
+		            }
+		        } else {
+		            JOptionPane.showMessageDialog(this, "Usuário não encontrado!");
+		        }
+
+		        BancoDeDados.desconectar(conn);
+		    } catch (Exception ex) {
+		        JOptionPane.showMessageDialog(this, "Erro ao realizar login: " + ex.getMessage());
+		    }
 		});
 		
 		
