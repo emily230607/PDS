@@ -107,7 +107,7 @@ public class TelaCadastro extends JFrame {
         }
 
         JFormattedTextField txtCPF = new JFormattedTextField(cpfMask);
-        txtCPF.setBounds(97, 102, 180, 23);
+        txtCPF.setBounds(98, 102, 95, 23);
         txtCPF.setFont(new Font("Tahoma", Font.PLAIN, 14));
         contentPane.add(txtCPF);
 

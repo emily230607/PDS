@@ -81,4 +81,9 @@ public class ProdutosDAO {
         }
         return lista;
     }
+
+	public void adicionarProduto(Produtos p) {
+		// TODO Auto-generated method stub
+		
+	}
 }
