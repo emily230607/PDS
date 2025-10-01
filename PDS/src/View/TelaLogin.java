@@ -155,7 +155,7 @@ public class TelaLogin extends JFrame {
 		            if (usuario.getIsAdmin()) {
 		                new TelaCadastroProdutos().setVisible(true);
 		            } else {
-		                new TelaCompra().setVisible(true);
+		                new TelaCompra(usuario).setVisible(true);
 		            }
 		        } else {
 		            JOptionPane.showMessageDialog(this, "Usuário não encontrado!");
