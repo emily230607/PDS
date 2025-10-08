@@ -25,6 +25,7 @@ import Model.Usuarios;
 import Model.UsuariosDAO;
 
 import javax.swing.text.DocumentFilter.FilterBypass;
+import java.awt.event.ActionListener;
 
 public class TelaLogin extends JFrame {
 
@@ -63,6 +64,7 @@ public class TelaLogin extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaLogin() {
+		setBackground(new Color(156, 122, 158));
 		setTitle("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

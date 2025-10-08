@@ -13,13 +13,15 @@ import java.sql.Connection;
 import Model.BancoDeDados;
 import Model.Produtos;
 import Model.ProdutosDAO;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaCadastroProdutos extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField txtNome, txtPreco, txtQuantidade;
-    private JTextField tntNovoNome, txtNovoPreco, txtNovaQuantidade;
+    private JTextField txtNovoNome, txtNovoPreco, txtNovaQuantidade;
     private JComboBox<String> comboBoxSelecionarProduto, comboBoxSelecionarProdutoEdicao;
 
     public static void main(String[] args) {
@@ -54,6 +56,44 @@ public class TelaCadastroProdutos extends JFrame {
         lblNome.setBounds(10, 52, 56, 25);
         contentPane.add(lblNome);
 
+        // --- Filtros de entrada ---
+        class ApenasLetrasFilter extends DocumentFilter {
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
+                    throws BadLocationException {
+                if (string.matches("[a-zA-ZÀ-ÿ\\s]+")) {
+                    super.insertString(fb, offset, string, attr);
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String string, AttributeSet attrs)
+                    throws BadLocationException {
+                if (string.matches("[a-zA-ZÀ-ÿ\\s]+")) {
+                    super.replace(fb, offset, length, string, attrs);
+                }
+            }
+        }
+
+        class ApenasNumerosFilter extends DocumentFilter {
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
+                    throws BadLocationException {
+                if (string.matches("[0-9,.]+")) {
+                    super.insertString(fb, offset, string, attr);
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String string, AttributeSet attrs)
+                    throws BadLocationException {
+                if (string.matches("[0-9,.]+")) {
+                    super.replace(fb, offset, length, string, attrs);
+                }
+            }
+        }
+
+        // --- Campos de cadastro ---
         txtNome = new JTextField();
         txtNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
         txtNome.setBounds(76, 56, 316, 25);
@@ -85,9 +125,9 @@ public class TelaCadastroProdutos extends JFrame {
         JButton btnCadastrar = new JButton("Cadastrar");
         btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 13));
         btnCadastrar.setBounds(320, 98, 120, 25);
-        btnCadastrar.addActionListener(e -> cadastrarProduto());
         contentPane.add(btnCadastrar);
 
+        // --- Remover produto ---
         JLabel lblRemoverProduto = new JLabel("Remover Produto");
         lblRemoverProduto.setFont(new Font("Tahoma", Font.PLAIN, 16));
         lblRemoverProduto.setBounds(230, 140, 150, 25);
@@ -101,9 +141,9 @@ public class TelaCadastroProdutos extends JFrame {
         JButton btnRemover = new JButton("Remover");
         btnRemover.setFont(new Font("Tahoma", Font.PLAIN, 13));
         btnRemover.setBounds(450, 180, 100, 25);
-        btnRemover.addActionListener(e -> removerProduto());
         contentPane.add(btnRemover);
 
+        // --- Editar produto ---
         JLabel lblEditarProduto = new JLabel("Editar Produto");
         lblEditarProduto.setFont(new Font("Tahoma", Font.PLAIN, 16));
         lblEditarProduto.setBounds(240, 230, 150, 25);
@@ -119,11 +159,11 @@ public class TelaCadastroProdutos extends JFrame {
         lblNovoNome.setBounds(10, 320, 80, 25);
         contentPane.add(lblNovoNome);
 
-        tntNovoNome = new JTextField();
-        tntNovoNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        tntNovoNome.setBounds(100, 320, 350, 25);
-        contentPane.add(tntNovoNome);
-        ((AbstractDocument) tntNovoNome.getDocument()).setDocumentFilter(new ApenasLetrasFilter());
+        txtNovoNome = new JTextField();
+        txtNovoNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        txtNovoNome.setBounds(100, 320, 350, 25);
+        contentPane.add(txtNovoNome);
+        ((AbstractDocument) txtNovoNome.getDocument()).setDocumentFilter(new ApenasLetrasFilter());
 
         JLabel lblNovoPreco = new JLabel("Novo preço");
         lblNovoPreco.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -150,35 +190,54 @@ public class TelaCadastroProdutos extends JFrame {
         JButton btnEditar = new JButton("Editar");
         btnEditar.setFont(new Font("Tahoma", Font.PLAIN, 13));
         btnEditar.setBounds(420, 360, 100, 25);
-        btnEditar.addActionListener(e -> editarProduto());
         contentPane.add(btnEditar);
 
+        // --- Botões inferiores ---
         JButton btnCancelar = new JButton("Cancelar");
         btnCancelar.setBackground(new Color(173, 145, 174));
         btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
         btnCancelar.setBounds(30, 450, 120, 30);
         contentPane.add(btnCancelar);
 
+        btnCancelar.addActionListener(e -> {
+		    dispose(); // Fecha a tela atual
+		    new TelaLogin().setVisible(true); // Vai para TelaCadastro
+		});
+
         JButton btnFinalizar = new JButton("Finalizar");
         btnFinalizar.setBackground(new Color(173, 145, 174));
         btnFinalizar.setFont(new Font("Tahoma", Font.PLAIN, 14));
         btnFinalizar.setBounds(430, 450, 120, 30);
         contentPane.add(btnFinalizar);
+        
+        btnFinalizar.addActionListener(e -> {
+		    dispose(); // Fecha a tela atual
+		    new TelaLogin().setVisible(true); // Vai para TelaCadastro
+		});
+
+        // --- Ações ---
+        btnCadastrar.addActionListener(e -> cadastrarProduto());
+        btnRemover.addActionListener(e -> removerProduto());
+        btnEditar.addActionListener(e -> editarProduto());
 
         carregarProdutos();
     }
+
+    // ---- Métodos auxiliares ----
 
     private void carregarProdutos() {
         try {
             comboBoxSelecionarProduto.removeAllItems();
             comboBoxSelecionarProdutoEdicao.removeAllItems();
+
             Connection conn = BancoDeDados.conectar();
             ProdutosDAO dao = new ProdutosDAO(conn);
+
             for (Produtos p : dao.listarTodos()) {
-                String item = p.getId() + " - " + p.getNome() + " (R$ " + p.getPreco() + ", qtd: " + p.getQuantidade() + ")";
-                comboBoxSelecionarProduto.addItem(item);
-                comboBoxSelecionarProdutoEdicao.addItem(item);
+                comboBoxSelecionarProduto.addItem(p.getId() + " - " + p.getNome());
+                comboBoxSelecionarProdutoEdicao.addItem(p.getId() + " - " + p.getNome());
             }
+
             BancoDeDados.desconectar(conn);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar produtos: " + e.getMessage());
@@ -191,7 +250,7 @@ public class TelaCadastroProdutos extends JFrame {
             double preco = Double.parseDouble(txtPreco.getText().replace(",", "."));
             int quantidade = Integer.parseInt(txtQuantidade.getText());
 
-            Produtos produto = new Produtos(nome, preco, quantidade);
+            Produtos produto = new Produtos(0, nome, preco, quantidade);
 
             Connection conn = BancoDeDados.conectar();
             ProdutosDAO dao = new ProdutosDAO(conn);
@@ -204,26 +263,48 @@ public class TelaCadastroProdutos extends JFrame {
             txtNome.setText("");
             txtPreco.setText("");
             txtQuantidade.setText("");
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao cadastrar: " + e.getMessage());
+        }
+    }
+
+    private void removerProduto() {
+        try {
+            if (comboBoxSelecionarProduto.getSelectedItem() == null) {
+                JOptionPane.showMessageDialog(this, "Selecione um produto para remover!");
+                return;
+            }
+
+            String item = comboBoxSelecionarProduto.getSelectedItem().toString();
+            int id = Integer.parseInt(item.split(" - ")[0]);
+
+            Connection conn = BancoDeDados.conectar();
+            ProdutosDAO dao = new ProdutosDAO(conn);
+            dao.remover(id);
+            BancoDeDados.desconectar(conn);
+
+            JOptionPane.showMessageDialog(this, "Produto removido com sucesso!");
+            carregarProdutos();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao remover: " + e.getMessage());
         }
     }
 
     private void editarProduto() {
         try {
             if (comboBoxSelecionarProdutoEdicao.getSelectedItem() == null) {
-                JOptionPane.showMessageDialog(this, "Selecione um produto!");
+                JOptionPane.showMessageDialog(this, "Selecione um produto para editar!");
                 return;
             }
+
             String item = comboBoxSelecionarProdutoEdicao.getSelectedItem().toString();
             int id = Integer.parseInt(item.split(" - ")[0]);
 
-            String novoNome = tntNovoNome.getText();
+            String novoNome = txtNovoNome.getText();
             double novoPreco = Double.parseDouble(txtNovoPreco.getText().replace(",", "."));
-            int novaQtd = Integer.parseInt(txtNovaQuantidade.getText());
+            int novaQuantidade = Integer.parseInt(txtNovaQuantidade.getText());
 
-            Produtos produto = new Produtos(id, novoNome, novoPreco, novaQtd);
+            Produtos produto = new Produtos(id, novoNome, novoPreco, novaQuantidade);
 
             Connection conn = BancoDeDados.conectar();
             ProdutosDAO dao = new ProdutosDAO(conn);
@@ -233,55 +314,11 @@ public class TelaCadastroProdutos extends JFrame {
             JOptionPane.showMessageDialog(this, "Produto atualizado com sucesso!");
             carregarProdutos();
 
-            tntNovoNome.setText("");
+            txtNovoNome.setText("");
             txtNovoPreco.setText("");
             txtNovaQuantidade.setText("");
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao editar: " + e.getMessage());
         }
-    }
-
-    private void removerProduto() {
-        try {
-            if (comboBoxSelecionarProduto.getSelectedItem() == null) {
-                JOptionPane.showMessageDialog(this, "Selecione um produto!");
-                return;
-            }
-            String item = comboBoxSelecionarProduto.getSelectedItem().toString();
-            int id = Integer.parseInt(item.split(" - ")[0]);
-
-            Connection conn = BancoDeDados.conectar();
-            ProdutosDAO dao = new ProdutosDAO(conn);
-            dao.remover(id);
-
-            conn.createStatement().execute("SET @count = 0; UPDATE produtos SET id = (@count := @count + 1) ORDER BY id; ALTER TABLE produtos AUTO_INCREMENT = 1;");
-
-            BancoDeDados.desconectar(conn);
-
-            JOptionPane.showMessageDialog(this, "Produto removido com sucesso!");
-            carregarProdutos();
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao remover: " + e.getMessage());
-        }
-    }
-}
-
-// 🔹 Filtros
-class ApenasLetrasFilter extends DocumentFilter {
-    @Override public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-        if (string.matches("[a-zA-ZÀ-ÿ\\s]+")) super.insertString(fb, offset, string, attr);
-    }
-    @Override public void replace(FilterBypass fb, int offset, int length, String string, AttributeSet attrs) throws BadLocationException {
-        if (string.matches("[a-zA-ZÀ-ÿ\\s]+")) super.replace(fb, offset, length, string, attrs);
-    }
-}
-class ApenasNumerosFilter extends DocumentFilter {
-    @Override public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-        if (string.matches("[0-9,.]+")) super.insertString(fb, offset, string, attr);
-    }
-    @Override public void replace(FilterBypass fb, int offset, int length, String string, AttributeSet attrs) throws BadLocationException {
-        if (string.matches("[0-9,.]+")) super.replace(fb, offset, length, string, attrs);
     }
 }
