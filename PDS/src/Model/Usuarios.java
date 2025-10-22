@@ -2,34 +2,55 @@ package Model;
 
 public class Usuarios {
 	
-	    private int cpf;
-	    private String nome;
+	private int id;
+    private String nome;
+    private String cpf;
+    private boolean isAdmin;
 
-	    // Construtores
-	    public Usuarios() {}
+    public Usuarios() {}
 
-	    public Usuarios(int cpf, String nome) {
-	        this.cpf = cpf;
-	        this.nome = nome;
-	    }
+    public Usuarios(int id, String nome, String cpf, boolean isAdmin) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.isAdmin = isAdmin;
+    }
 
-	    // Getters e Setters
-	    public int getcpf() {
-	        return cpf;
-	    }
+    public Usuarios(String nome, String cpf, boolean isAdmin) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.isAdmin = isAdmin;
+    }
 
-	    public void setcpf(int cpf) {
-	        this.cpf = cpf;
-	    }
+    public int getId() {
+        return id;
+    }
 
-	    public String getNome() {
-	        return nome;
-	    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	    public void setNome(String nome) {
-	        this.nome = nome;
-	    }
+    public String getNome() {
+        return nome;
+    }
 
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
+    public String getCpf() {
+        return cpf;
+    }
 
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+}
