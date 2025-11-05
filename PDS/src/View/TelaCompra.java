@@ -1,25 +1,18 @@
 package View;
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.*;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import javax.swing.JOptionPane;
-import java.sql.Connection;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+
 import java.util.ArrayList;
 
-import Model.BancoDeDados;
-import Model.Produtos;
-import Model.ProdutosDAO;
+import Controller.CompraController;
 import Model.Usuarios;
+import Model.Produtos;
 
 public class TelaCompra extends JFrame {
 
@@ -29,27 +22,11 @@ public class TelaCompra extends JFrame {
     private JTextField txtQuantidade;
     private JTextArea areaCarrinho;
     private JLabel lblTotal;
-    private double totalCompra = 0.0;
-    private ArrayList<Produtos> carrinho = new ArrayList<>();
-    private Usuarios usuario; // quem está logado
+    private JButton btnAdicionar, btnFinalizar, btnCancelar;
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    // exemplo de abertura (aqui deveria passar o usuário logado)
-                    TelaCompra frame = new TelaCompra(new Usuarios("Cliente Teste", "12345678900", false));
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+    private CompraController controller;
 
     public TelaCompra(Usuarios usuario) {
-        this.usuario = usuario;
-
         setTitle("Tela de Compra");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 600, 500);
@@ -85,12 +62,30 @@ public class TelaCompra extends JFrame {
         txtQuantidade.setBounds(410, 60, 50, 25);
         contentPane.add(txtQuantidade);
 
-        JButton btnAdicionar = new JButton("Adicionar");
+        // 🔹 Impede que o usuário digite letras no campo de quantidade
+        ((AbstractDocument) txtQuantidade.getDocument()).setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
+                    throws BadLocationException {
+                if (string.matches("\\d+")) {
+                    super.insertString(fb, offset, string, attr);
+                }
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String string, AttributeSet attrs)
+                    throws BadLocationException {
+                if (string.matches("\\d+")) {
+                    super.replace(fb, offset, length, string, attrs);
+                }
+            }
+        });
+
+        btnAdicionar = new JButton("Adicionar");
         btnAdicionar.setFont(new Font("Tahoma", Font.PLAIN, 14));
         btnAdicionar.setBounds(470, 60, 100, 25);
         contentPane.add(btnAdicionar);
 
-        // Área para mostrar os itens do carrinho
         areaCarrinho = new JTextArea();
         areaCarrinho.setFont(new Font("Monospaced", Font.PLAIN, 14));
         JScrollPane scroll = new JScrollPane(areaCarrinho);
@@ -102,126 +97,43 @@ public class TelaCompra extends JFrame {
         lblTotal.setBounds(30, 370, 300, 25);
         contentPane.add(lblTotal);
 
-        JButton btnFinalizar = new JButton("Finalizar Compra");
+        btnFinalizar = new JButton("Finalizar Compra");
         btnFinalizar.setBackground(new Color(173, 145, 174));
         btnFinalizar.setFont(new Font("Tahoma", Font.PLAIN, 14));
         btnFinalizar.setBounds(370, 370, 200, 30);
         contentPane.add(btnFinalizar);
 
-        JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar = new JButton("Cancelar");
         btnCancelar.setBackground(new Color(173, 145, 174));
         btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
         btnCancelar.setBounds(30, 410, 120, 30);
         contentPane.add(btnCancelar);
 
-        // ====== Lógica ======
-        carregarProdutos();
+        // 🔹 Instancia o controller e passa os componentes
+        controller = new CompraController(this, usuario);
+        controller.carregarProdutos();
 
-        btnAdicionar.addActionListener(e -> adicionarAoCarrinho());
-        btnFinalizar.addActionListener(e -> finalizarCompra());
-        btnCancelar.addActionListener(e -> {
-            dispose();
-            new TelaLogin().setVisible(true);
-        });
+        // 🔹 Eventos dos botões
+        btnAdicionar.addActionListener(e -> controller.adicionarAoCarrinho());
+        btnFinalizar.addActionListener(e -> controller.finalizarCompra());
+        btnCancelar.addActionListener(e -> controller.cancelar());
     }
 
-    private void carregarProdutos() {
-        try {
-            comboBoxProdutos.removeAllItems();
-            Connection conn = BancoDeDados.conectar();
-            ProdutosDAO dao = new ProdutosDAO(conn);
+    // ======== Getters usados pelo Controller ========
 
-            for (Produtos p : dao.listarTodos()) {
-                comboBoxProdutos.addItem(p.getId() + " - " + p.getNome() + " (R$" + p.getPreco() + ")");
-            }
-
-            BancoDeDados.desconectar(conn);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao carregar produtos: " + e.getMessage());
-        }
+    public JComboBox<String> getComboBoxProdutos() {
+        return comboBoxProdutos;
     }
 
-    private void adicionarAoCarrinho() {
-        if (comboBoxProdutos.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(this, "Selecione um produto!");
-            return;
-        }
-
-        try {
-            String item = comboBoxProdutos.getSelectedItem().toString();
-            int id = Integer.parseInt(item.split(" - ")[0]);
-            int qtd = Integer.parseInt(txtQuantidade.getText());
-
-            Connection conn = BancoDeDados.conectar();
-            ProdutosDAO dao = new ProdutosDAO(conn);
-            Produtos produto = dao.buscarPorId(id);
-            BancoDeDados.desconectar(conn);
-
-            if (produto == null) {
-                JOptionPane.showMessageDialog(this, "Produto não encontrado!");
-                return;
-            }
-
-            if (qtd > produto.getQuantidade()) {
-                JOptionPane.showMessageDialog(this, "Estoque insuficiente!");
-                return;
-            }
-
-            double subtotal = produto.getPreco() * qtd;
-            totalCompra += subtotal;
-
-            carrinho.add(new Produtos(produto.getId(), produto.getNome(), produto.getPreco(), qtd));
-
-            areaCarrinho.append(produto.getNome() + " x" + qtd + " - R$ " + subtotal + "\n");
-            lblTotal.setText("Total: R$ " + String.format("%.2f", totalCompra));
-
-            txtQuantidade.setText("");
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao adicionar: " + e.getMessage());
-        }
+    public JTextField getTxtQuantidade() {
+        return txtQuantidade;
     }
 
-    private void finalizarCompra() {
-        if (carrinho.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Carrinho vazio!");
-            return;
-        }
+    public JTextArea getAreaCarrinho() {
+        return areaCarrinho;
+    }
 
-        try {
-            Connection conn = BancoDeDados.conectar();
-            ProdutosDAO dao = new ProdutosDAO(conn);
-
-            for (Produtos p : carrinho) {
-                Produtos prodBanco = dao.buscarPorId(p.getId());
-                int novoEstoque = prodBanco.getQuantidade() - p.getQuantidade();
-                prodBanco.setQuantidade(novoEstoque);
-                dao.atualizar(prodBanco);
-            }
-
-            BancoDeDados.desconectar(conn);
-
-            // Emitir "nota fiscal"
-            StringBuilder nota = new StringBuilder();
-            nota.append("Nota Fiscal\n");
-            nota.append("Cliente: " + usuario.getNome() + " - CPF: " + usuario.getCpf() + "\n\n");
-            for (Produtos p : carrinho) {
-                double subtotal = p.getPreco() * p.getQuantidade();
-                nota.append(p.getNome() + " x" + p.getQuantidade() + " - R$ " + subtotal + "\n");
-            }
-            nota.append("\nTotal: R$ " + String.format("%.2f", totalCompra));
-
-            JOptionPane.showMessageDialog(this, nota.toString());
-
-            carrinho.clear();
-            areaCarrinho.setText("");
-            totalCompra = 0;
-            lblTotal.setText("Total: R$ 0,00");
-
-            carregarProdutos();
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao finalizar compra: " + e.getMessage());
-        }
+    public JLabel getLblTotal() {
+        return lblTotal;
     }
 }

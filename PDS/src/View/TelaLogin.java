@@ -1,186 +1,132 @@
 package View;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
-import java.sql.Connection;
-
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DocumentFilter;
-import javax.swing.text.MaskFormatter;
-
-import Model.BancoDeDados;
-import Model.Usuarios;
-import Model.UsuariosDAO;
-
-import javax.swing.text.DocumentFilter.FilterBypass;
+import javax.swing.text.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
+/**
+ * Classe responsável pela tela de Login do sistema.
+ */
 public class TelaLogin extends JFrame {
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    private JTextField txtNome;
+    private JFormattedTextField txtCPF;
+    private JButton btnEntrar;
+    private JButton btnCadastrar;
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTextField txtNome;
-	private JTextField textField_1;
+    /**
+     * Construtor da classe TelaLogin.
+     */
+    public TelaLogin() {
+        setTitle("Login");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 450, 300);
+        contentPane = new JPanel();
+        contentPane.setBackground(new Color(208, 192, 209));
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaLogin frame = new TelaLogin();
-					frame.setVisible(true);
-					System.out.println("dsfsdf");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+        JLabel lblTitulo = new JLabel("Informe seus dados");
+        lblTitulo.setBounds(120, 11, 250, 36);
+        lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 18));
+        contentPane.add(lblTitulo);
 
-	private void abrirTelaCadastroProdutos() {
-	    dispose(); // Fecha a tela atual
-	    new TelaCadastroProdutos().setVisible(true); // Abre a tela de cadastro
-	}
-	
-	private void abrirTelaCadastro() {
-	    dispose(); // Fecha a tela atual
-	    new TelaCadastro().setVisible(true); // Abre a tela de cadastro
-	}
-	/**
-	 * Create the frame.
-	 */
-	public TelaLogin() {
-		setBackground(new Color(156, 122, 158));
-		setTitle("Login");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(208, 192, 209));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        JLabel lblNome = new JLabel("Nome:");
+        lblNome.setBounds(57, 82, 60, 19);
+        lblNome.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        contentPane.add(lblNome);
 
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("Informe ");
-		lblNewLabel.setBounds(178, 11, 73, 36);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		contentPane.add(lblNewLabel);
-		
-		JLabel lblNome = new JLabel("Nome");
-		lblNome.setBounds(57, 82, 39, 19);
-		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		contentPane.add(lblNome);
-		
-		class ApenasLetrasFilter extends DocumentFilter {
-		    @Override
-		    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) 
-		            throws BadLocationException {
-		        if (string.matches("[a-zA-ZÀ-ÿ\\s]+")) { // aceita letras e espaço
-		            super.insertString(fb, offset, string, attr);
-		        }
-		    }
+        txtNome = new JTextField();
+        txtNome.setBounds(121, 80, 240, 23);
+        txtNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        contentPane.add(txtNome);
+        txtNome.setColumns(10);
+        ((AbstractDocument) txtNome.getDocument()).setDocumentFilter(new ApenasLetrasFilter());
 
-		    @Override
-		    public void replace(FilterBypass fb, int offset, int length, String string, AttributeSet attrs) 
-		            throws BadLocationException {
-		        if (string.matches("[a-zA-ZÀ-ÿ\\s]+")) {
-		            super.replace(fb, offset, length, string, attrs);
-		        }
-		    }
-		}
-		
-		txtNome = new JTextField();
-		txtNome.setBounds(121, 80, 240, 23);
-		txtNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		contentPane.add(txtNome);
-		txtNome.setColumns(10);
-		((AbstractDocument) txtNome.getDocument()).setDocumentFilter(new ApenasLetrasFilter());
-		
-		
-		
-		
-		JLabel lblCPF = new JLabel("CPF");
-		lblCPF.setBounds(59, 132, 25, 19);
-		lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		contentPane.add(lblCPF);
-		
-		MaskFormatter cpfMask = null;
-		try {
-		    cpfMask = new MaskFormatter("###########"); // 11 números
-		    cpfMask.setPlaceholderCharacter('_'); // mostra "_" nos espaços vazios
-		} catch (Exception e) {
-		    e.printStackTrace();
-		}
+        JLabel lblCPF = new JLabel("CPF:");
+        lblCPF.setBounds(59, 132, 40, 19);
+        lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        contentPane.add(lblCPF);
 
-		JFormattedTextField txtCPF = new JFormattedTextField(cpfMask);
-		txtCPF.setBounds(121, 130, 98, 23);
-		txtCPF.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		contentPane.add(txtCPF);
-		
-		JButton btnEntrar = new JButton("Entrar");
-		btnEntrar.setBounds(272, 197, 89, 30);
-		btnEntrar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		contentPane.add(btnEntrar);
+        try {
+            MaskFormatter cpfMask = new MaskFormatter("###########");
+            cpfMask.setPlaceholderCharacter('_');
+            txtCPF = new JFormattedTextField(cpfMask);
+            txtCPF.setBounds(121, 130, 120, 23);
+            txtCPF.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            contentPane.add(txtCPF);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		btnEntrar.addActionListener(e -> {
-		    String nome = txtNome.getText();
-		    String cpf = txtCPF.getText();
+        btnEntrar = new JButton("Entrar");
+        btnEntrar.setBounds(272, 197, 100, 30);
+        btnEntrar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        contentPane.add(btnEntrar);
 
-		    if (nome.isEmpty() || cpf.contains("_")) {
-		        JOptionPane.showMessageDialog(this, "Preencha todos os campos corretamente!");
-		        return;
-		    }
+        btnCadastrar = new JButton("Me Cadastrar");
+        btnCadastrar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnCadastrar.setBounds(78, 197, 130, 30);
+        btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        contentPane.add(btnCadastrar);
+    }
 
-		    try {
-		        Connection conn = BancoDeDados.conectar();
-		        UsuariosDAO dao = new UsuariosDAO();
-		        Usuarios usuario = dao.buscarPorCpf(cpf);
+    /**
+     * Filtro que permite apenas letras no campo nome.
+     */
+    private static class ApenasLetrasFilter extends DocumentFilter {
+        @Override
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
+                throws BadLocationException {
+            if (string.matches("[a-zA-ZÀ-ÿ\\s]+")) {
+                super.insertString(fb, offset, string, attr);
+            }
+        }
 
-		        if (usuario != null && usuario.getNome().equalsIgnoreCase(nome)) {
-		            JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
+        @Override
+        public void replace(FilterBypass fb, int offset, int length, String string, AttributeSet attrs)
+                throws BadLocationException {
+            if (string.matches("[a-zA-ZÀ-ÿ\\s]+")) {
+                super.replace(fb, offset, length, string, attrs);
+            }
+        }
+    }
 
-		            dispose(); // fecha login
-		            if (usuario.getIsAdmin()) {
-		                new TelaCadastroProdutos().setVisible(true);
-		            } else {
-		                new TelaCompra(usuario).setVisible(true);
-		            }
-		        } else {
-		            JOptionPane.showMessageDialog(this, "Usuário não encontrado!");
-		        }
+    // Métodos de acesso (getters)
+    public String getNome() {
+        return txtNome.getText();
+    }
 
-		        BancoDeDados.desconectar(conn);
-		    } catch (Exception ex) {
-		        JOptionPane.showMessageDialog(this, "Erro ao realizar login: " + ex.getMessage());
-		    }
-		});
-		
-		
-		
-		JButton btnMeCadastar = new JButton("Me Cadastrar");
-		btnMeCadastar.setBounds(78, 197, 130, 30);
-		btnMeCadastar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		contentPane.add(btnMeCadastar);
+    public String getCPF() {
+        return txtCPF.getText();
+    }
 
-		btnMeCadastar.addActionListener(e -> {
-		    dispose(); // Fecha a tela atual
-		    new TelaCadastro().setVisible(true); // Vai para TelaCadastro
-		});
-		
-	}
+    // Métodos para registrar ações
+    public void entrar(ActionListener actionListener) {
+        this.btnEntrar.addActionListener(actionListener);
+    }
+
+    public void cadastrar(ActionListener actionListener) {
+        this.btnCadastrar.addActionListener(actionListener);
+    }
+
+    // Exibir mensagens
+    public void exibirMensagem(String titulo, String mensagem, int tipoMensagem) {
+        JOptionPane.showMessageDialog(this, mensagem, titulo, tipoMensagem);
+    }
+
+    // Limpar os campos
+    public void limparCampos() {
+        txtNome.setText("");
+        txtCPF.setText("");
+    }
 }
-
