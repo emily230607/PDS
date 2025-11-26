@@ -17,7 +17,6 @@ public class ProdutosDAO {
         this.conn = conn;
     }
 
-    // Inserir produto
     public void inserir(Produtos produto) throws SQLException {
         String sql = "INSERT INTO Produtos (nome, preco, quantidade) VALUES (?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -27,7 +26,6 @@ public class ProdutosDAO {
         stmt.executeUpdate();
     }
 
-    // Atualizar produto
     public void atualizar(Produtos produto) throws SQLException {
         String sql = "UPDATE Produtos SET nome=?, preco=?, quantidade=? WHERE id=?";
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -38,7 +36,6 @@ public class ProdutosDAO {
         stmt.executeUpdate();
     }
 
-    // Remover produto
     public void remover(int id) throws SQLException {
         String sql = "DELETE FROM Produtos WHERE id=?";
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -46,7 +43,6 @@ public class ProdutosDAO {
         stmt.executeUpdate();
     }
 
-    // Buscar produto por ID
     public Produtos buscarPorId(int id) throws SQLException {
         String sql = "SELECT * FROM Produtos WHERE id=?";
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -64,7 +60,6 @@ public class ProdutosDAO {
         return null;
     }
 
-    // Listar todos os produtos
     public List<Produtos> listarTodos() throws SQLException {
         List<Produtos> lista = new ArrayList<>();
         String sql = "SELECT * FROM Produtos";

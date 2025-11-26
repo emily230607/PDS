@@ -65,7 +65,6 @@ public class TelaCompra extends JFrame {
         txtQuantidade.setBounds(410, 60, 50, 25);
         contentPane.add(txtQuantidade);
 
-        // 🔹 Impede que o usuário digite letras no campo de quantidade
         ((AbstractDocument) txtQuantidade.getDocument()).setDocumentFilter(new DocumentFilter() {
             @Override
             public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
@@ -122,17 +121,14 @@ public class TelaCompra extends JFrame {
         btnExcluirProduto.setBounds(30, 371, 127, 30);
         contentPane.add(btnExcluirProduto);
 
-        // 🔹 Instancia o controller e passa os componentes
         controller = new CompraController(this, usuario);
         controller.carregarProdutos();
 
-        // 🔹 Eventos dos botões
         btnAdicionar.addActionListener(e -> controller.adicionarAoCarrinho());
         btnFinalizar.addActionListener(e -> controller.finalizarCompra());
         btnCancelar.addActionListener(e -> controller.cancelar());
     }
 
-    // ======== Getters usados pelo Controller ========
 
     public JComboBox<String> getComboBoxProdutos() {
         return comboBoxProdutos;

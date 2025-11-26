@@ -25,7 +25,6 @@ public class ItensCompra {
         this.subtotal = subtotal;
     }
 
-    // Getters e Setters
     public int getId() {
         return id;
     }

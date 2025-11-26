@@ -77,7 +77,6 @@ public class TelaCadastro extends JFrame {
         btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
         contentPane.add(btnCancelar);
 
-        // Inicializa o controller
         new CadastroController(this);
     }
 

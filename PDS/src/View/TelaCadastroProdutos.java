@@ -138,11 +138,9 @@ public class TelaCadastroProdutos extends JFrame {
         btnFinalizar.setBounds(430, 450, 120, 30);
         contentPane.add(btnFinalizar);
 
-        // Inicializa o controller
         new ProdutoController(this);
     }
 
-    // Getters
     public String getNome() { return txtNome.getText(); }
     public String getPreco() { return txtPreco.getText(); }
     public String getQuantidade() { return txtQuantidade.getText(); }
