@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 public class UsuariosDAO {
 
-    // CREATE - Adicionar um novo usuário
     public void adicionarUsuario(Usuarios usuario) {
         String sql = "INSERT INTO usuarios (nome, cpf, isAdmin) VALUES (?, ?, ?)";
         Connection conexao = null;
@@ -35,7 +34,6 @@ public class UsuariosDAO {
         }
     }
 
-    // READ - Buscar usuário por CPF
     public Usuarios buscarPorCpf(String cpf) {
         String sql = "SELECT * FROM usuarios WHERE cpf = ?";
         Connection conexao = null;
@@ -70,7 +68,6 @@ public class UsuariosDAO {
         return null;
     }
 
-    // READ - Buscar usuário por ID
     public Usuarios buscarPorId(int id) {
         String sql = "SELECT * FROM usuarios WHERE id = ?";
         Connection conexao = null;

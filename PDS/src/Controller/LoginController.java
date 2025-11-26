@@ -13,7 +13,6 @@ public class LoginController {
     public LoginController(TelaLogin tela) {
         this.tela = tela;
 
-        // Adiciona eventos aos botões
         this.tela.getBtnEntrar().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 entrar();
@@ -50,7 +49,6 @@ public class LoginController {
 
             tela.dispose();
 
-            // Se for admin → tela de produtos
             if (usuario.getIsAdmin()) {
                 new TelaCadastroProdutos().setVisible(true);
             } else {

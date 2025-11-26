@@ -15,7 +15,6 @@ public class CadastroController {
         this.view = view;
         this.model = new UsuariosDAO();
 
-        // Botão "Cadastrar"
         this.view.cadastrar(e -> {
             String nome = view.getNome();
             String cpf = view.getCPF();
@@ -43,7 +42,6 @@ public class CadastroController {
             }
         });
 
-        // Botão "Cancelar"
         this.view.cancelar(e -> {
             view.dispose();
             TelaLogin login = new TelaLogin();

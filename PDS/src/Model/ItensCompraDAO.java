@@ -12,7 +12,6 @@ public class ItensCompraDAO {
         this.conn = conn;
     }
 
-    // Inserir item da compra
     public void inserir(ItensCompra item) throws SQLException {
         String sql = "INSERT INTO ItensCompra (compra_id, produto_id, quantidade, subtotal) VALUES (?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -23,7 +22,6 @@ public class ItensCompraDAO {
         stmt.executeUpdate();
     }
 
-    // Listar itens de uma compra específica
     public List<ItensCompra> listarPorCompra(int compraId) throws SQLException {
         List<ItensCompra> lista = new ArrayList<>();
         String sql = "SELECT * FROM ItensCompra WHERE compra_id=?";
@@ -43,7 +41,6 @@ public class ItensCompraDAO {
         return lista;
     }
 
-    // Buscar item por ID
     public ItensCompra buscarPorId(int id) throws SQLException {
         String sql = "SELECT * FROM ItensCompra WHERE id=?";
         PreparedStatement stmt = conn.prepareStatement(sql);

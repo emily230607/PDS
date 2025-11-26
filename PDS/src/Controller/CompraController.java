@@ -109,18 +109,15 @@ public class CompraController {
             ComprasDAO compraDao = new ComprasDAO(conn);
             ItensCompraDAO itensDao = new ItensCompraDAO(conn);
 
-            // 1. Registrar a compra
             Compras compra = new Compras(usuario.getId(), totalCompra);
             int compraId = compraDao.inserir(compra);
 
-            // 2. Atualizar estoque e registrar itens
             for (Produtos p : carrinho) {
                 Produtos prodBanco = prodDao.buscarPorId(p.getId());
                 int novoEstoque = prodBanco.getQuantidade() - p.getQuantidade();
                 prodBanco.setQuantidade(novoEstoque);
                 prodDao.atualizar(prodBanco);
 
-                // Registrar item da compra
                 double subtotal = p.getPreco() * p.getQuantidade();
                 ItensCompra item = new ItensCompra(compraId, p.getId(), p.getQuantidade(), subtotal);
                 itensDao.inserir(item);
@@ -128,7 +125,6 @@ public class CompraController {
 
             BancoDeDados.desconectar(conn);
 
-            // 3. Gerar nota fiscal
             NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
             StringBuilder nota = new StringBuilder();
             nota.append("========== NOTA FISCAL ==========\n\n");
@@ -148,7 +144,6 @@ public class CompraController {
 
             JOptionPane.showMessageDialog(view, nota.toString(), "Compra Finalizada", JOptionPane.INFORMATION_MESSAGE);
 
-            // 4. Limpar carrinho
             carrinho.clear();
             view.getAreaCarrinho().setText("");
             totalCompra = 0;

@@ -12,7 +12,6 @@ public class ComprasDAO {
         this.conn = conn;
     }
 
-    // Inserir compra e retornar o ID gerado
     public int inserir(Compras compra) throws SQLException {
         String sql = "INSERT INTO Compras (usuario_id, total) VALUES (?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -20,7 +19,6 @@ public class ComprasDAO {
         stmt.setDouble(2, compra.getTotal());
         stmt.executeUpdate();
         
-        // Recupera o ID gerado
         ResultSet rs = stmt.getGeneratedKeys();
         if (rs.next()) {
             return rs.getInt(1);
@@ -28,7 +26,6 @@ public class ComprasDAO {
         return -1;
     }
 
-    // Buscar compra por ID
     public Compras buscarPorId(int id) throws SQLException {
         String sql = "SELECT * FROM Compras WHERE id=?";
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -46,7 +43,6 @@ public class ComprasDAO {
         return null;
     }
 
-    // Listar todas as compras de um usuário
     public List<Compras> listarPorUsuario(int usuarioId) throws SQLException {
         List<Compras> lista = new ArrayList<>();
         String sql = "SELECT * FROM Compras WHERE usuario_id=? ORDER BY data_compra DESC";
@@ -65,7 +61,6 @@ public class ComprasDAO {
         return lista;
     }
 
-    // Listar todas as compras
     public List<Compras> listarTodas() throws SQLException {
         List<Compras> lista = new ArrayList<>();
         String sql = "SELECT * FROM Compras ORDER BY data_compra DESC";

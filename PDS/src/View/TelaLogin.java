@@ -8,9 +8,6 @@ import javax.swing.text.*;
 import java.awt.event.ActionListener;
 import Controller.LoginController;
 
-/**
- * Classe responsável pela tela de Login do sistema.
- */
 public class TelaLogin extends JFrame {
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -19,9 +16,6 @@ public class TelaLogin extends JFrame {
     private JButton btnEntrar;
     private JButton btnCadastrar;
 
-    /**
-     * Construtor da classe TelaLogin.
-     */
     public TelaLogin() {
         setTitle("Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,13 +69,9 @@ public class TelaLogin extends JFrame {
         btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 14));
         contentPane.add(btnCadastrar);
 
-        // 🔥 CORREÇÃO: Inicializar o controller aqui
         new LoginController(this);
     }
 
-    /**
-     * Filtro que permite apenas letras no campo nome.
-     */
     private static class ApenasLetrasFilter extends DocumentFilter {
         @Override
         public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
@@ -100,7 +90,6 @@ public class TelaLogin extends JFrame {
         }
     }
 
-    // Métodos de acesso (getters)
     public String getNome() {
         return txtNome.getText();
     }
@@ -125,7 +114,6 @@ public class TelaLogin extends JFrame {
         return btnCadastrar;
     }
 
-    // Métodos para registrar ações
     public void entrar(ActionListener actionListener) {
         this.btnEntrar.addActionListener(actionListener);
     }
@@ -134,12 +122,10 @@ public class TelaLogin extends JFrame {
         this.btnCadastrar.addActionListener(actionListener);
     }
 
-    // Exibir mensagens
     public void exibirMensagem(String titulo, String mensagem, int tipoMensagem) {
         JOptionPane.showMessageDialog(this, mensagem, titulo, tipoMensagem);
     }
-
-    // Limpar os campos
+    
     public void limparCampos() {
         txtNome.setText("");
         txtCPF.setText("");

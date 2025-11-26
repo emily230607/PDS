@@ -23,7 +23,6 @@ public class Compras {
         this.total = total;
     }
 
-    // Getters e Setters
     public int getId() {
         return id;
     }
