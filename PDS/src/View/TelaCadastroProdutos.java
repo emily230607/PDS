@@ -23,6 +23,8 @@ public class TelaCadastroProdutos extends JFrame {
         contentPane.setBackground(new Color(208, 192, 209));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
+     	setPreferredSize(new Dimension(450, 300));
+        
         setContentPane(contentPane);
         contentPane.setLayout(null);
 

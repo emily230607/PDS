@@ -27,7 +27,6 @@ public class TelaCompra extends JFrame {
     private JButton btnAdicionar, btnFinalizar, btnCancelar;
 
     private CompraController controller;
-    private JButton btnExcluirProduto;
 
     public TelaCompra(Usuarios usuario) {
         setTitle("Tela de Compra");
@@ -96,13 +95,13 @@ public class TelaCompra extends JFrame {
 
         lblTotal = new JLabel("Total: R$ 0,00");
         lblTotal.setFont(new Font("Tahoma", Font.BOLD, 16));
-        lblTotal.setBounds(423, 371, 126, 25);
+        lblTotal.setBounds(30, 371, 126, 25);
         contentPane.add(lblTotal);
 
         btnFinalizar = new JButton("Finalizar Compra");
         btnFinalizar.setBackground(new Color(173, 145, 174));
         btnFinalizar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        btnFinalizar.setBounds(419, 407, 151, 30);
+        btnFinalizar.setBounds(419, 371, 151, 30);
         contentPane.add(btnFinalizar);
 
         btnCancelar = new JButton("Cancelar");
@@ -110,16 +109,6 @@ public class TelaCompra extends JFrame {
         btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
         btnCancelar.setBounds(30, 410, 127, 30);
         contentPane.add(btnCancelar);
-        
-        btnExcluirProduto = new JButton("Excluir Produto");
-        btnExcluirProduto.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        	}
-        });
-        btnExcluirProduto.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        btnExcluirProduto.setBackground(new Color(173, 145, 174));
-        btnExcluirProduto.setBounds(30, 371, 127, 30);
-        contentPane.add(btnExcluirProduto);
 
         controller = new CompraController(this, usuario);
         controller.carregarProdutos();

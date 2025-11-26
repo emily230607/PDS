@@ -25,6 +25,8 @@ public class TelaLogin extends JFrame {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
+        
+        
 
         JLabel lblTitulo = new JLabel("Informe seus dados");
         lblTitulo.setBounds(120, 11, 250, 36);

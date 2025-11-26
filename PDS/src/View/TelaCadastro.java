@@ -1,12 +1,14 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.*;
 import java.awt.event.ActionListener;
 import Controller.CadastroController;
+import net.miginfocom.swing.MigLayout;
 
 public class TelaCadastro extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -16,66 +18,61 @@ public class TelaCadastro extends JFrame {
     private JCheckBox chckbxADM;
     private JButton btnCadastrar;
     private JButton btnCancelar;
+	private Object cpfMask;
 
     public TelaCadastro() {
         setTitle("Cadastro");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 300);
-
+        setBounds(100, 100, 453, 299);
+        
+      	setPreferredSize(new Dimension(450, 300));
+        
         contentPane = new JPanel();
         contentPane.setBackground(new Color(208, 192, 209));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
-        contentPane.setLayout(null);
-
-        JLabel lblTitulo = new JLabel("Cadastro de Usuário");
-        lblTitulo.setBounds(120, 11, 250, 36);
-        lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 18));
-        contentPane.add(lblTitulo);
-
-        JLabel lblNome = new JLabel("Nome:");
-        lblNome.setBounds(52, 59, 60, 19);
-        lblNome.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        contentPane.add(lblNome);
-
-        txtNome = new JTextField();
-        txtNome.setBounds(98, 58, 240, 23);
-        txtNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        ((AbstractDocument) txtNome.getDocument()).setDocumentFilter(new ApenasLetrasFilter());
-        contentPane.add(txtNome);
-        txtNome.setColumns(10);
-
-        JLabel lblCPF = new JLabel("CPF:");
-        lblCPF.setBounds(54, 102, 40, 19);
-        lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        contentPane.add(lblCPF);
+        contentPane.setLayout(new MigLayout("", "[100px,grow][200px,grow][100px,grow]", "[grow][grow][grow][grow][grow]"));
+                        
+                                JLabel lblTitulo = new JLabel("Cadastro de Usuário");
+                                lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 18));
+                                contentPane.add(lblTitulo, "cell 1 0,grow");
+                
+                        JLabel lblNome = new JLabel("Nome:");
+                        lblNome.setFont(new Font("Tahoma", Font.PLAIN, 15));
+                        contentPane.add(lblNome, "cell 0 1,alignx right,aligny center");
 
         try {
             MaskFormatter cpfMask = new MaskFormatter("###########");
             cpfMask.setPlaceholderCharacter('_');
-            txtCPF = new JFormattedTextField(cpfMask);
-            txtCPF.setBounds(98, 102, 120, 23);
-            txtCPF.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            contentPane.add(txtCPF);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        chckbxADM = new JCheckBox("Sou Administrador");
-        chckbxADM.setBounds(50, 146, 200, 30);
-        chckbxADM.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        chckbxADM.setBackground(new Color(208, 192, 209));
-        contentPane.add(chckbxADM);
-
-        btnCadastrar = new JButton("Cadastrar");
-        btnCadastrar.setBounds(272, 197, 120, 30);
-        btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        contentPane.add(btnCadastrar);
-
-        btnCancelar = new JButton("Cancelar");
-        btnCancelar.setBounds(78, 197, 120, 30);
-        btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        contentPane.add(btnCancelar);
+                        
+                                txtNome = new JTextField();
+                                txtNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                ((AbstractDocument) txtNome.getDocument()).setDocumentFilter(new ApenasLetrasFilter());
+                                contentPane.add(txtNome, "cell 1 1,growx,aligny center");
+                                txtNome.setColumns(10);
+                
+                        JLabel lblCPF = new JLabel("CPF:");
+                        lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 15));
+                        contentPane.add(lblCPF, "cell 0 2,alignx right,aligny center");
+                        txtCPF = new JFormattedTextField(cpfMask);
+                        txtCPF.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                        contentPane.add(txtCPF, "cell 1 2,growx,aligny center");
+                                        
+                                                chckbxADM = new JCheckBox("Sou Administrador");
+                                                chckbxADM.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                                chckbxADM.setBackground(new Color(208, 192, 209));
+                                                contentPane.add(chckbxADM, "cell 1 3,grow");
+                                
+                                        btnCancelar = new JButton("Cancelar");
+                                        btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                        contentPane.add(btnCancelar, "flowx,cell 0 4,grow");
+                        
+                                btnCadastrar = new JButton("Cadastrar");
+                                btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                                contentPane.add(btnCadastrar, "cell 2 4,grow");
 
         new CadastroController(this);
     }
