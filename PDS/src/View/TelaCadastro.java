@@ -6,10 +6,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.*;
 import java.awt.event.ActionListener;
+import Controller.CadastroController;
 
-/**
- * Classe responsável pela tela de cadastro de usuários.
- */
 public class TelaCadastro extends JFrame {
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -19,9 +17,6 @@ public class TelaCadastro extends JFrame {
     private JButton btnCadastrar;
     private JButton btnCancelar;
 
-    /**
-     * Construtor da classe TelaCadastro.
-     */
     public TelaCadastro() {
         setTitle("Cadastro");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,6 +64,7 @@ public class TelaCadastro extends JFrame {
         chckbxADM = new JCheckBox("Sou Administrador");
         chckbxADM.setBounds(50, 146, 200, 30);
         chckbxADM.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        chckbxADM.setBackground(new Color(208, 192, 209));
         contentPane.add(chckbxADM);
 
         btnCadastrar = new JButton("Cadastrar");
@@ -80,11 +76,11 @@ public class TelaCadastro extends JFrame {
         btnCancelar.setBounds(78, 197, 120, 30);
         btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
         contentPane.add(btnCancelar);
+
+        // Inicializa o controller
+        new CadastroController(this);
     }
 
-    /**
-     * Filtro que permite apenas letras no campo de nome.
-     */
     private static class ApenasLetrasFilter extends DocumentFilter {
         @Override
         public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
@@ -103,7 +99,6 @@ public class TelaCadastro extends JFrame {
         }
     }
 
-    // Métodos de acesso (getters)
     public String getNome() {
         return txtNome.getText();
     }
@@ -116,7 +111,6 @@ public class TelaCadastro extends JFrame {
         return chckbxADM.isSelected();
     }
 
-    // Métodos para registrar ações
     public void cadastrar(ActionListener actionListener) {
         this.btnCadastrar.addActionListener(actionListener);
     }
@@ -125,12 +119,10 @@ public class TelaCadastro extends JFrame {
         this.btnCancelar.addActionListener(actionListener);
     }
 
-    // Exibir mensagens
     public void exibirMensagem(String titulo, String mensagem, int tipoMensagem) {
         JOptionPane.showMessageDialog(this, mensagem, titulo, tipoMensagem);
     }
 
-    // Limpar campos
     public void limparCampos() {
         txtNome.setText("");
         txtCPF.setText("");

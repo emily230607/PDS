@@ -7,16 +7,13 @@ import Model.UsuariosDAO;
 import View.TelaCadastro;
 import View.TelaLogin;
 
-/**
- * Classe responsável pela comunicação entre a view (TelaCadastro) e o model (UsuariosDAO).
- */
 public class CadastroController {
     private final TelaCadastro view;
     private final UsuariosDAO model;
 
-    public CadastroController(TelaCadastro view, UsuariosDAO model) {
+    public CadastroController(TelaCadastro view) {
         this.view = view;
-        this.model = model;
+        this.model = new UsuariosDAO();
 
         // Botão "Cadastrar"
         this.view.cadastrar(e -> {
@@ -30,18 +27,16 @@ public class CadastroController {
             }
 
             try {
-                Connection conn = BancoDeDados.conectar();
-
                 Usuarios usuario = new Usuarios(nome, cpf, isAdmin);
                 model.adicionarUsuario(usuario);
 
                 view.exibirMensagem("Sucesso", "Usuário cadastrado com sucesso!", 1);
                 view.limparCampos();
 
-                BancoDeDados.desconectar(conn);
-
                 view.dispose();
-                new TelaLogin().setVisible(true);
+                TelaLogin login = new TelaLogin();
+                new LoginController(login);
+                login.setVisible(true);
 
             } catch (Exception ex) {
                 view.exibirMensagem("Erro", "Erro ao cadastrar: " + ex.getMessage(), 0);
@@ -51,7 +46,9 @@ public class CadastroController {
         // Botão "Cancelar"
         this.view.cancelar(e -> {
             view.dispose();
-            new TelaLogin().setVisible(true);
+            TelaLogin login = new TelaLogin();
+            new LoginController(login);
+            login.setVisible(true);
         });
     }
 }

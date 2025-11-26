@@ -3,9 +3,8 @@ package View;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.DocumentFilter;
 import java.awt.event.ActionListener;
+import Controller.ProdutoController;
 
 public class TelaCadastroProdutos extends JFrame {
 
@@ -138,6 +137,9 @@ public class TelaCadastroProdutos extends JFrame {
         btnFinalizar.setFont(new Font("Tahoma", Font.PLAIN, 14));
         btnFinalizar.setBounds(430, 450, 120, 30);
         contentPane.add(btnFinalizar);
+
+        // Inicializa o controller
+        new ProdutoController(this);
     }
 
     // Getters
@@ -164,7 +166,6 @@ public class TelaCadastroProdutos extends JFrame {
         JOptionPane.showMessageDialog(this, msg);
     }
 
-    // Métodos para associar controladores
     public void addCadastrarListener(ActionListener listener) { btnCadastrar.addActionListener(listener); }
     public void addRemoverListener(ActionListener listener) { btnRemover.addActionListener(listener); }
     public void addEditarListener(ActionListener listener) { btnEditar.addActionListener(listener); }

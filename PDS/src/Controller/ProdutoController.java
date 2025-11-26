@@ -2,6 +2,7 @@ package Controller;
 
 import Model.*;
 import View.TelaCadastroProdutos;
+import View.TelaLogin;
 import java.sql.Connection;
 import java.util.List;
 
@@ -9,18 +10,23 @@ public class ProdutoController {
 
     private TelaCadastroProdutos view;
     private ProdutosDAO dao;
+    private Connection conn;
 
     public ProdutoController(TelaCadastroProdutos view) {
         this.view = view;
 
         try {
-            Connection conn = BancoDeDados.conectar();
-            this.dao = new ProdutosDAO(conn);
+            this.conn = BancoDeDados.conectar();
+            if (conn != null) {
+                this.dao = new ProdutosDAO(conn);
+                carregarProdutos();
+            } else {
+                view.mostrarMensagem("Erro: Não foi possível conectar ao banco de dados!");
+            }
         } catch (Exception e) {
             view.mostrarMensagem("Erro de conexão com o banco: " + e.getMessage());
+            e.printStackTrace();
         }
-
-        carregarProdutos();
 
         view.addCadastrarListener(e -> cadastrarProduto());
         view.addRemoverListener(e -> removerProduto());
@@ -42,29 +48,41 @@ public class ProdutoController {
             }
         } catch (Exception e) {
             view.mostrarMensagem("Erro ao carregar produtos: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
     private void cadastrarProduto() {
         try {
             String nome = view.getNome();
-            double preco = Double.parseDouble(view.getPreco().replace(",", "."));
-            int qtd = Integer.parseInt(view.getQuantidade());
+            String precoStr = view.getPreco();
+            String qtdStr = view.getQuantidade();
+
+            if (nome.isEmpty() || precoStr.isEmpty() || qtdStr.isEmpty()) {
+                view.mostrarMensagem("Preencha todos os campos!");
+                return;
+            }
+
+            double preco = Double.parseDouble(precoStr.replace(",", "."));
+            int qtd = Integer.parseInt(qtdStr);
 
             Produtos p = new Produtos(0, nome, preco, qtd);
             dao.inserir(p);
             view.mostrarMensagem("Produto cadastrado com sucesso!");
             view.limparCampos();
             carregarProdutos();
+        } catch (NumberFormatException e) {
+            view.mostrarMensagem("Erro: Preço ou quantidade inválidos!");
         } catch (Exception e) {
             view.mostrarMensagem("Erro ao cadastrar: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
     private void removerProduto() {
         try {
             String item = (String) view.getComboRemover().getSelectedItem();
-            if (item == null) {
+            if (item == null || item.isEmpty()) {
                 view.mostrarMensagem("Selecione um produto para remover!");
                 return;
             }
@@ -75,34 +93,51 @@ public class ProdutoController {
             carregarProdutos();
         } catch (Exception e) {
             view.mostrarMensagem("Erro ao remover: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
     private void editarProduto() {
         try {
             String item = (String) view.getComboEditar().getSelectedItem();
-            if (item == null) {
+            if (item == null || item.isEmpty()) {
                 view.mostrarMensagem("Selecione um produto para editar!");
                 return;
             }
 
-            int id = Integer.parseInt(item.split(" - ")[0]);
             String nome = view.getNovoNome();
-            double preco = Double.parseDouble(view.getNovoPreco().replace(",", "."));
-            int qtd = Integer.parseInt(view.getNovaQuantidade());
+            String precoStr = view.getNovoPreco();
+            String qtdStr = view.getNovaQuantidade();
+
+            if (nome.isEmpty() || precoStr.isEmpty() || qtdStr.isEmpty()) {
+                view.mostrarMensagem("Preencha todos os campos de edição!");
+                return;
+            }
+
+            int id = Integer.parseInt(item.split(" - ")[0]);
+            double preco = Double.parseDouble(precoStr.replace(",", "."));
+            int qtd = Integer.parseInt(qtdStr);
 
             Produtos p = new Produtos(id, nome, preco, qtd);
             dao.atualizar(p);
             view.mostrarMensagem("Produto atualizado com sucesso!");
             view.limparCampos();
             carregarProdutos();
+        } catch (NumberFormatException e) {
+            view.mostrarMensagem("Erro: Preço ou quantidade inválidos!");
         } catch (Exception e) {
             view.mostrarMensagem("Erro ao editar: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
     private void voltarLogin() {
+        if (conn != null) {
+            BancoDeDados.desconectar(conn);
+        }
         view.dispose();
-        new View.TelaLogin().setVisible(true);
+        TelaLogin login = new TelaLogin();
+        new LoginController(login);
+        login.setVisible(true);
     }
 }

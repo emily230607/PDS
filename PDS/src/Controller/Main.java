@@ -5,6 +5,7 @@ import Model.BancoDeDados;
 
 public class Main {
     public static void main(String[] args) {
+        // Testa a conexão com o banco
         try {
             BancoDeDados.conectar();
             System.out.println("✅ Banco conectado com sucesso!");
@@ -14,6 +15,7 @@ public class Main {
             BancoDeDados.desconectar(null);
         }
 
+        // Inicia a interface gráfica
         javax.swing.SwingUtilities.invokeLater(() -> {
             TelaLogin tela = new TelaLogin();
             tela.setVisible(true);

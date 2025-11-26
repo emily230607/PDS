@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.*;
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import Controller.LoginController;
 
 /**
  * Classe responsável pela tela de Login do sistema.
@@ -71,13 +71,12 @@ public class TelaLogin extends JFrame {
         contentPane.add(btnEntrar);
 
         btnCadastrar = new JButton("Me Cadastrar");
-        btnCadastrar.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        	}
-        });
         btnCadastrar.setBounds(78, 197, 130, 30);
         btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 14));
         contentPane.add(btnCadastrar);
+
+        // 🔥 CORREÇÃO: Inicializar o controller aqui
+        new LoginController(this);
     }
 
     /**
@@ -108,6 +107,22 @@ public class TelaLogin extends JFrame {
 
     public String getCPF() {
         return txtCPF.getText();
+    }
+
+    public JTextField getTxtNome() {
+        return txtNome;
+    }
+
+    public JFormattedTextField getTxtCpf() {
+        return txtCPF;
+    }
+
+    public JButton getBtnEntrar() {
+        return btnEntrar;
+    }
+
+    public JButton getBtnCadastrar() {
+        return btnCadastrar;
     }
 
     // Métodos para registrar ações
