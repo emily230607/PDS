@@ -15,42 +15,35 @@ public class Main {
     
     public static void main(String[] args) {
         
-        // Try-catch para configurar Look and Feel
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
-            // Exceção ao configurar aparência (não crítico)
             System.err.println("⚠️ Não foi possível configurar Look and Feel: " + e.getMessage());
         }
         
-        // Testa conexão com banco antes de abrir o sistema
         Connection conexaoTeste = null;
         
         try {
             System.out.println("🔄 Tentando conectar ao banco de dados...");
             
-            // Tenta conectar - pode lançar SQLException (checked)
             conexaoTeste = BancoDeDados.conectar();
             
             if (conexaoTeste == null) {
-                // Lança exceção se conexão falhou
                 throw new SQLException("Falha ao estabelecer conexão!");
             }
             
-            System.out.println("✅ Banco conectado com sucesso!");
-            System.out.println("📊 Sistema pronto para uso.\n");
+            System.out.println("Banco conectado com sucesso!");
+            System.out.println("Sistema pronto para uso.\n");
             
         } catch (SQLException e) {
-            // Exceção checked de SQL
-            System.err.println("❌ ERRO CRÍTICO: Não foi possível conectar ao banco!");
-            System.err.println("📋 Detalhes: " + e.getMessage());
-            System.err.println("\n🔧 Verifique:");
+            System.err.println("ERRO CRÍTICO: Não foi possível conectar ao banco!");
+            System.err.println("Detalhes: " + e.getMessage());
+            System.err.println("\n Verifique:");
             System.err.println("   1. Se o MySQL está rodando");
             System.err.println("   2. Se o banco 'sistemaMercado' existe");
             System.err.println("   3. Usuário e senha em BancoDeDados.java");
             System.err.println("   4. Driver JDBC está no classpath\n");
             
-            // Mostra alerta visual ao usuário
             JOptionPane.showMessageDialog(null,
                 "Erro ao conectar ao banco de dados!\n\n" +
                 "Verifique se o MySQL está rodando e\n" +
@@ -59,11 +52,9 @@ public class Main {
                 "Erro Crítico de Conexão",
                 JOptionPane.ERROR_MESSAGE);
             
-            // Encerra aplicação pois banco é essencial
             System.exit(1);
             
         } catch (Exception e) {
-            // Qualquer outra exceção não prevista
             System.err.println("❌ Erro inesperado: " + e.getMessage());
             e.printStackTrace();
             
@@ -74,12 +65,10 @@ public class Main {
             System.exit(1);
             
         } finally {
-            // Finally sempre executa - fecha conexão de teste
             BancoDeDados.desconectar(conexaoTeste);
             System.out.println("🔒 Conexão de teste finalizada.\n");
         }
         
-        // Inicia interface gráfica na Event Dispatch Thread
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -90,7 +79,6 @@ public class Main {
                     System.out.println("✅ Sistema iniciado com sucesso!\n");
                     
                 } catch (Exception e) {
-                    // Exceção ao criar interface
                     System.err.println("❌ Erro ao criar interface: " + e.getMessage());
                     e.printStackTrace();
                     
