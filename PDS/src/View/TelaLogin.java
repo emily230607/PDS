@@ -1,12 +1,14 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.*;
 import java.awt.event.ActionListener;
 import Controller.LoginController;
+import net.miginfocom.swing.MigLayout;
 
 public class TelaLogin extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -19,57 +21,62 @@ public class TelaLogin extends JFrame {
     public TelaLogin() {
         setTitle("Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 300);
+        setSize(450, 300);
+        setMinimumSize(new Dimension(400, 250)); // Tamanho mínimo da janela
+        setLocationRelativeTo(null); // Centraliza na tela
+        
         contentPane = new JPanel();
         contentPane.setBackground(new Color(208, 192, 209));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        
+        // MigLayout: wrap 1 = 1 componente por linha, fill = preenche espaço disponível
+        contentPane.setLayout(new MigLayout(
+            "fill, insets 20", // Layout Constraints
+            "[right][grow]",   // Column Constraints: coluna 1 alinhada à direita, coluna 2 cresce
+            "[]20[]10[]20[]"   // Row Constraints: espaçamentos entre linhas
+        ));
+        
         setContentPane(contentPane);
-        contentPane.setLayout(null);
-        
-        
 
+        // Título
         JLabel lblTitulo = new JLabel("Informe seus dados");
-        lblTitulo.setBounds(120, 11, 250, 36);
         lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 18));
-        contentPane.add(lblTitulo);
+        contentPane.add(lblTitulo, "span 2, align center, gapbottom 20, wrap");
 
+        // Nome
         JLabel lblNome = new JLabel("Nome:");
-        lblNome.setBounds(57, 82, 60, 19);
         lblNome.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        contentPane.add(lblNome);
-
+        contentPane.add(lblNome, "");
+        
         txtNome = new JTextField();
-        txtNome.setBounds(121, 80, 240, 23);
         txtNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        contentPane.add(txtNome);
         txtNome.setColumns(10);
         ((AbstractDocument) txtNome.getDocument()).setDocumentFilter(new ApenasLetrasFilter());
+        contentPane.add(txtNome, "growx, wrap");
 
+        // CPF
         JLabel lblCPF = new JLabel("CPF:");
-        lblCPF.setBounds(59, 132, 40, 19);
         lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        contentPane.add(lblCPF);
+        contentPane.add(lblCPF, "");
 
         try {
             MaskFormatter cpfMask = new MaskFormatter("###########");
             cpfMask.setPlaceholderCharacter('_');
             txtCPF = new JFormattedTextField(cpfMask);
-            txtCPF.setBounds(121, 130, 120, 23);
             txtCPF.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            contentPane.add(txtCPF);
+            contentPane.add(txtCPF, "width 150!, wrap");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        btnEntrar = new JButton("Entrar");
-        btnEntrar.setBounds(272, 197, 100, 30);
-        btnEntrar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        contentPane.add(btnEntrar);
-
+        // Botões
         btnCadastrar = new JButton("Me Cadastrar");
-        btnCadastrar.setBounds(78, 197, 130, 30);
         btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        contentPane.add(btnCadastrar);
+        contentPane.add(btnCadastrar, "skip, split 2, width 130!, gaptop 20");
+
+        btnEntrar = new JButton("Entrar");
+        btnEntrar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        contentPane.add(btnEntrar, "width 100!, gapleft 10");
 
         new LoginController(this);
     }
