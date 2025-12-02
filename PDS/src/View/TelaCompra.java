@@ -30,25 +30,21 @@ public class TelaCompra extends JFrame {
     public TelaCompra(Usuarios usuario) {
         setTitle("Tela de Compra");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 500);
-        setMinimumSize(new Dimension(550, 450));
+        setMinimumSize(new Dimension(750, 504));
         setLocationRelativeTo(null);
         
         contentPane = new JPanel();
         contentPane.setBackground(new Color(208, 192, 209));
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        // Layout com 5 colunas para controle fino dos componentes
         contentPane.setLayout(new MigLayout("fill, insets 15", "[right][grow][right][60][100]", "[]15[]15[grow]15[][]"));
         
         setContentPane(contentPane);
 
-        // Título
         JLabel lblTitulo = new JLabel("Compra de Produtos");
         lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 18));
         contentPane.add(lblTitulo, "cell 0 0 5 1,alignx center");
 
-        // Seleção de Produto
         JLabel lblProduto = new JLabel("Produto:");
         lblProduto.setFont(new Font("Tahoma", Font.PLAIN, 14));
         contentPane.add(lblProduto, "cell 0 1");
@@ -65,7 +61,6 @@ public class TelaCompra extends JFrame {
         txtQuantidade.setFont(new Font("Tahoma", Font.PLAIN, 14));
         contentPane.add(txtQuantidade, "cell 3 1,width 60!");
 
-        // Filtro para aceitar apenas números
         ((AbstractDocument) txtQuantidade.getDocument()).setDocumentFilter(new DocumentFilter() {
             @Override
             public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
@@ -88,19 +83,16 @@ public class TelaCompra extends JFrame {
         btnAdicionar.setFont(new Font("Tahoma", Font.PLAIN, 14));
         contentPane.add(btnAdicionar, "cell 4 1,width 100!");
 
-        // Área de Carrinho (com ScrollPane)
         areaCarrinho = new JTextArea();
         areaCarrinho.setFont(new Font("Monospaced", Font.PLAIN, 14));
         areaCarrinho.setEditable(false);
         JScrollPane scroll = new JScrollPane(areaCarrinho);
         contentPane.add(scroll, "cell 0 2 5 1,grow");
 
-        // Total
         lblTotal = new JLabel("Total: R$ 0,00");
         lblTotal.setFont(new Font("Tahoma", Font.BOLD, 16));
         contentPane.add(lblTotal, "cell 0 3");
 
-        // Botões Finais
         btnCancelar = new JButton("Cancelar");
         btnCancelar.setBackground(new Color(173, 145, 174));
         btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));

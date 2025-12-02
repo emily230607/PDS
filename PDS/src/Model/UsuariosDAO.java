@@ -90,7 +90,6 @@ public class UsuariosDAO {
             throw new RuntimeException(e.getMessage());
             
         } catch (SQLException e) {
-            // Exceção checked de SQL
             System.err.println("Erro ao buscar usuário no banco!");
             System.err.println("Detalhes: " + e.getMessage());
             e.printStackTrace();

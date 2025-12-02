@@ -30,21 +30,15 @@ public class TelaCadastro extends JFrame {
         contentPane.setBackground(new Color(208, 192, 209));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         
-        // MigLayout com 2 colunas: labels e campos
-        contentPane.setLayout(new MigLayout(
-            "fill, insets 20",
-            "[right][grow]",
-            "[]20[]10[]10[]20[]"
+        contentPane.setLayout(new MigLayout( "fill, insets 20", "[right][grow]", "[]20[]10[]10[]20[]"
         ));
         
         setContentPane(contentPane);
 
-        // Título
         JLabel lblTitulo = new JLabel("Cadastro de Usuário");
         lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 18));
         contentPane.add(lblTitulo, "span 2, align center, gapbottom 20, wrap");
 
-        // Nome
         JLabel lblNome = new JLabel("Nome:");
         lblNome.setFont(new Font("Tahoma", Font.PLAIN, 15));
         contentPane.add(lblNome, "");
@@ -55,7 +49,6 @@ public class TelaCadastro extends JFrame {
         ((AbstractDocument) txtNome.getDocument()).setDocumentFilter(new ApenasLetrasFilter());
         contentPane.add(txtNome, "growx, wrap");
 
-        // CPF
         JLabel lblCPF = new JLabel("CPF:");
         lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 15));
         contentPane.add(lblCPF, "");
@@ -70,13 +63,11 @@ public class TelaCadastro extends JFrame {
             e.printStackTrace();
         }
 
-        // Checkbox
         chckbxADM = new JCheckBox("Sou Administrador");
         chckbxADM.setFont(new Font("Tahoma", Font.PLAIN, 14));
         chckbxADM.setBackground(new Color(208, 192, 209));
         contentPane.add(chckbxADM, "skip, wrap");
 
-        // Botões
         btnCancelar = new JButton("Cancelar");
         btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
         contentPane.add(btnCancelar, "skip, split 2, width 120!, gaptop 20");
@@ -85,7 +76,6 @@ public class TelaCadastro extends JFrame {
         btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 14));
         contentPane.add(btnCadastrar, "width 120!, gapleft 10");
 
-        // Inicializa o controller
         new CadastroController(this);
     }
 

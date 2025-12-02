@@ -211,7 +211,7 @@ public class CompraController {
             view.getLblTotal().setText("Total: R$ 0,00");
             carregarProdutos();
             
-            System.out.println("✅ Compra finalizada com sucesso!");
+            System.out.println("Compra finalizada com sucesso!");
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(view, 

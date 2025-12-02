@@ -27,21 +27,15 @@ public class TelaCadastroProdutos extends JFrame {
         contentPane.setBackground(new Color(208, 192, 209));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         
-        // Layout simples e fluido
-        contentPane.setLayout(new MigLayout(
-            "fill, insets 10",
-            "[grow]",
-            "[]10[]5[]5[]15[]5[]15[]5[]5[]5[]20[]"
+        contentPane.setLayout(new MigLayout("fill, insets 10", "[grow]", "[]10[]5[]5[]15[]5[]15[]5[]5[]5[]20[]"
         ));
         
         setContentPane(contentPane);
 
-        // ========== SEÇÃO: CADASTRAR PRODUTO ==========
         JLabel lblNewLabel = new JLabel("Cadastrar novo Produto");
         lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
         contentPane.add(lblNewLabel, "align center, wrap");
 
-        // Painel para Nome
         JPanel panelNome = new JPanel(new MigLayout("insets 0", "[][grow]", "[]"));
         panelNome.setBackground(new Color(208, 192, 209));
         
@@ -55,7 +49,6 @@ public class TelaCadastroProdutos extends JFrame {
         
         contentPane.add(panelNome, "growx, wrap");
 
-        // Painel para Preço, Quantidade e Botão Cadastrar
         JPanel panelCadastro = new JPanel(new MigLayout("insets 0", "[][65][20][80][grow][120]", "[]"));
         panelCadastro.setBackground(new Color(208, 192, 209));
         
@@ -75,7 +68,7 @@ public class TelaCadastroProdutos extends JFrame {
         txtQuantidade.setFont(new Font("Tahoma", Font.PLAIN, 14));
         panelCadastro.add(txtQuantidade, "width 50!");
         
-        panelCadastro.add(new JLabel(""), "growx"); // Espaçador
+        panelCadastro.add(new JLabel(""), "growx"); 
         
         btnCadastrar = new JButton("Cadastrar");
         btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -83,12 +76,10 @@ public class TelaCadastroProdutos extends JFrame {
         
         contentPane.add(panelCadastro, "growx, wrap");
 
-        // ========== SEÇÃO: REMOVER PRODUTO ==========
         JLabel lblRemoverProduto = new JLabel("Remover Produto");
         lblRemoverProduto.setFont(new Font("Tahoma", Font.PLAIN, 16));
         contentPane.add(lblRemoverProduto, "align center, gaptop 10, wrap");
 
-        // Painel Remover
         JPanel panelRemover = new JPanel(new MigLayout("insets 0", "[grow][100]", "[]"));
         panelRemover.setBackground(new Color(208, 192, 209));
         
@@ -102,17 +93,14 @@ public class TelaCadastroProdutos extends JFrame {
         
         contentPane.add(panelRemover, "growx, wrap");
 
-        // ========== SEÇÃO: EDITAR PRODUTO ==========
         JLabel lblEditarProduto = new JLabel("Editar Produto");
         lblEditarProduto.setFont(new Font("Tahoma", Font.PLAIN, 16));
         contentPane.add(lblEditarProduto, "align center, gaptop 10, wrap");
 
-        // Combo Editar
         comboBoxSelecionarProdutoEdicao = new JComboBox<>();
         comboBoxSelecionarProdutoEdicao.setFont(new Font("Tahoma", Font.PLAIN, 14));
         contentPane.add(comboBoxSelecionarProdutoEdicao, "growx, wrap");
 
-        // Painel Novo Nome
         JPanel panelNovoNome = new JPanel(new MigLayout("insets 0", "[][grow]", "[]"));
         panelNovoNome.setBackground(new Color(208, 192, 209));
         
@@ -126,7 +114,6 @@ public class TelaCadastroProdutos extends JFrame {
         
         contentPane.add(panelNovoNome, "growx, wrap");
 
-        // Painel Novo Preço, Nova Qtd e Botão Editar
         JPanel panelEdicao = new JPanel(new MigLayout("insets 0", "[][100][20][80][grow][100]", "[]"));
         panelEdicao.setBackground(new Color(208, 192, 209));
         
@@ -146,7 +133,7 @@ public class TelaCadastroProdutos extends JFrame {
         txtNovaQuantidade.setFont(new Font("Tahoma", Font.PLAIN, 14));
         panelEdicao.add(txtNovaQuantidade, "width 80!");
         
-        panelEdicao.add(new JLabel(""), "growx"); // Espaçador
+        panelEdicao.add(new JLabel(""), "growx");
         
         btnEditar = new JButton("Editar");
         btnEditar.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -154,7 +141,7 @@ public class TelaCadastroProdutos extends JFrame {
         
         contentPane.add(panelEdicao, "growx, wrap");
 
-        // ========== BOTÕES FINAIS ==========
+
         JPanel panelBotoes = new JPanel(new MigLayout("insets 0", "[120][grow][120]", "[]"));
         panelBotoes.setBackground(new Color(208, 192, 209));
         
@@ -163,7 +150,7 @@ public class TelaCadastroProdutos extends JFrame {
         btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
         panelBotoes.add(btnCancelar, "width 120!");
         
-        panelBotoes.add(new JLabel(""), "growx"); // Espaçador
+        panelBotoes.add(new JLabel(""), "growx"); 
         
         btnFinalizar = new JButton("Finalizar");
         btnFinalizar.setBackground(new Color(173, 145, 174));
@@ -175,15 +162,39 @@ public class TelaCadastroProdutos extends JFrame {
         new ProdutoController(this);
     }
 
-    public String getNome() { return txtNome.getText(); }
-    public String getPreco() { return txtPreco.getText(); }
-    public String getQuantidade() { return txtQuantidade.getText(); }
-    public String getNovoNome() { return txtNovoNome.getText(); }
-    public String getNovoPreco() { return txtNovoPreco.getText(); }
-    public String getNovaQuantidade() { return txtNovaQuantidade.getText(); }
+    public String getNome() { 
+    	return txtNome.getText(); 
+    	}
+    
+    public String getPreco() { 
+    	return txtPreco.getText(); 
+    	}
+    
+    public String getQuantidade() { 
+    	return txtQuantidade.getText(); 
+    	}
+    
+    public String getNovoNome() { 
+    	return txtNovoNome.getText();
+    	}
+    
+    public String getNovoPreco() { 
+    	return txtNovoPreco.getText();
+    	}
+    
+    public String getNovaQuantidade() { 
+    	return txtNovaQuantidade.getText(); 
+    	}
 
-    public JComboBox<String> getComboRemover() { return comboBoxSelecionarProduto; }
-    public JComboBox<String> getComboEditar() { return comboBoxSelecionarProdutoEdicao; }
+    
+    public JComboBox<String> getComboRemover() { 
+    	return comboBoxSelecionarProduto;
+    	}
+    
+    public JComboBox<String> getComboEditar() {
+    	return comboBoxSelecionarProdutoEdicao;
+    	}
+    
 
     public void limparCampos() {
         txtNome.setText("");
@@ -198,9 +209,24 @@ public class TelaCadastroProdutos extends JFrame {
         JOptionPane.showMessageDialog(this, msg);
     }
 
-    public void addCadastrarListener(ActionListener listener) { btnCadastrar.addActionListener(listener); }
-    public void addRemoverListener(ActionListener listener) { btnRemover.addActionListener(listener); }
-    public void addEditarListener(ActionListener listener) { btnEditar.addActionListener(listener); }
-    public void addCancelarListener(ActionListener listener) { btnCancelar.addActionListener(listener); }
-    public void addFinalizarListener(ActionListener listener) { btnFinalizar.addActionListener(listener); }
+    public void addCadastrarListener(ActionListener listener) { 
+    	btnCadastrar.addActionListener(listener); 
+    	}
+    
+    public void addRemoverListener(ActionListener listener) { 
+    	btnRemover.addActionListener(listener);
+    	}
+    
+    public void addEditarListener(ActionListener listener) {
+    	btnEditar.addActionListener(listener);
+    	}
+    
+    public void addCancelarListener(ActionListener listener) {
+    	btnCancelar.addActionListener(listener);
+    	}
+    
+    public void addFinalizarListener(ActionListener listener) { 
+    	btnFinalizar.addActionListener(listener);
+    	}
+    
 }
