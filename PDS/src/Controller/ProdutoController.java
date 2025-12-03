@@ -200,7 +200,7 @@ public class ProdutoController {
             Produtos p = new Produtos(id, nome, preco, qtd);
             dao.atualizar(p);
             
-            view.mostrarMensagem("✅ Produto atualizado com sucesso!");
+            view.mostrarMensagem(" Produto atualizado com sucesso!");
             view.limparCampos();
             carregarProdutos();
             

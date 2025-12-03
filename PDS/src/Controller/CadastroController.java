@@ -57,8 +57,7 @@ public class CadastroController {
             view.exibirMensagem("Erro", "Erro ao cadastrar: " + e.getMessage(), 0);
             
         } catch (Exception e) {
-            view.exibirMensagem("Erro Inesperado", 
-                "Erro inesperado: " + e.getMessage(), 0);
+            view.exibirMensagem("Erro Inesperado", "Erro inesperado: " + e.getMessage(), 0);
             e.printStackTrace();
         }
     }

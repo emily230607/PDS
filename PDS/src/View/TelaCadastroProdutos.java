@@ -203,11 +203,11 @@ public class TelaCadastroProdutos extends JFrame {
         txtNovoNome.setText("");
         txtNovoPreco.setText("");
         txtNovaQuantidade.setText("");
-    }
+    	}
 
     public void mostrarMensagem(String msg) {
         JOptionPane.showMessageDialog(this, msg);
-    }
+    	}
 
     public void addCadastrarListener(ActionListener listener) { 
     	btnCadastrar.addActionListener(listener); 
